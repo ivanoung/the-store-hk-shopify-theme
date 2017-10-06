@@ -1,0 +1,123 @@
+{% paginate blog.articles by settings.blog_count %}
+
+<div id="content">
+
+  <div class="container " data-section-id="{{ section.id }}" data-section-type="blog-page-section">
+    {% include 'breadcrumb' %}
+    <div class="title clearfix">
+      {% if current_tags %}
+      <h1>{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}</h1>
+      {% else %}
+      <h1>{{ blog.title }}</h1>
+      {% endif %}
+      <div class="title_right">
+        <a href="{{ blog.url }}.atom" class="rss"><span class="fa fa-rss"></span>RSS</a>
+      </div>
+    </div>
+
+    <div class="blog_c ideas-hover">
+      <div class="row">
+        <div class="{% if section.settings.show_sidebar_recent_posts or section.settings.show_sidebar_blog_tags %}col-md-9 col-sm-8{% else %} col-sm-12 {% endif %}">
+
+        {% unless section.settings.blog_layout == 'full' %}
+          <div class="masonry">  
+        {% endunless %}
+
+          {% for article in blog.articles %}
+          {% if section.settings.blog_layout == '3-column' %}
+            <div class="masonry-post col-md-4 col-sm-6 col-ms-6">
+          {% elsif section.settings.blog_layout == '2-column' %}
+            <div class="masonry-post col-sm-6 col-ms-6">
+          {% endif %}
+
+            <div class="blog_blk red5 clearfix animated" data-animation="rollIn">
+              {% if article.image %}
+              <a href="{{ article.url }}">
+              <div class="box">
+                <figure class="effect-chico">
+                  <img src="{{ article | img_url: '1400x' }}" alt="{{ article.title }}" />
+                  <figcaption></figcaption>
+                </figure>
+              </div> 
+              </a>
+              {% endif %}
+              <div class="rte clearfix">
+                <h2>{{ article.title }} {% if blog.comments_enabled? %}<span class="pull-right"><a href="{{ article.url }}#comments"><i class="fa fa-comments"></i> {{ article.comments_count }}</a></span>{% endif %}</h2>
+                  {{ article.excerpt_or_content }}
+              </div>
+
+              <div class="read-more"><a href="{{ article.url }}" class="btn_c">{{ 'blogs.article.read_more' | t }}</a></div>
+              {% assign published_at = article.published_at | date: '%b %d, %Y' %}
+              <div class="tag_c clearfix">
+                <ul>
+                  <li><span class="fa fa-calendar"></span><span>{{ 'blogs.article.date_html' | t: date: published_at }}</span></li>
+                  <li><span class="fa fa-user"></span>{{ article.author }}</li>
+                  {% if article.tags.size > 0 %}
+                  {% include 'tags-article' %}
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          {% unless section.settings.blog_layout == 'full' %}
+          </div>
+          {% endunless %}
+          {% endfor %}
+
+          {% unless section.settings.blog_layout == 'full' %}
+          </div>  
+          {% endunless %}
+
+
+          {% if paginate.pages > 1 %}
+          {% include 'pagination-custom' %}
+          {% endif %}
+        </div>
+        {% include 'sidebar-blog' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endpaginate %}
+
+{% schema %}
+ {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "select",
+        "id": "blog_layout",
+        "label": "Layout",
+        "info": "[Learn more](https:\/\/milehighthemes.zendesk.com\/hc\/en-us\/articles\/216901366)",
+        "options": [
+          {
+            "value": "full",
+            "label": "Full width"
+          },
+          {
+            "value": "2-column",
+            "label": "2-column masonry"
+          },
+          {
+            "value": "3-column",
+            "label": "3-column masonry"
+          }
+        ]
+      },
+  	  {
+        "type": "header",
+        "content": "Sidebar options"
+      },	
+      {
+        "type": "checkbox",
+        "id": "show_sidebar_recent_posts",
+        "label": "Show recent posts"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sidebar_blog_tags",
+        "label": "Show tags"
+      }
+    ]
+  }
+{% endschema %}
+
