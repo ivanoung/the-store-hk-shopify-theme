@@ -1,23 +1,21 @@
+{% assign block_count = 0 %}
+{% for block in section.blocks %}
+    {% assign block_count = block_count | plus: 1 %}
+{% endfor %}
+
 {% if section.settings.home_feature_collection_grid_layout == '6-col' %}
 {% assign grid_item_width = '2' %}
-{% assign grid_item_count = '6' %}
 {% elsif section.settings.home_feature_collection_grid_layout == '4-col' %}
 {% assign grid_item_width = '3' %}
-{% assign grid_item_count = '4' %}
 {% elsif section.settings.home_feature_collection_grid_layout == '3-col' %}
 {% assign grid_item_width = '4' %}
-{% assign grid_item_count = '3' %}
 {% else %}
 {% assign grid_item_width = '6' %}
-{% assign grid_item_count = '2' %}
 {% endif %}
 
-{% assign index = 0 %}
-{% for block in section.blocks %}
-    {% assign index = index | plus: 1 %}
-{% endfor %}
+
 <div class="container" data-section-id="{{ section.id }}" data-section-type="featured-collections-section">
-{% if index != 0 %}
+{% if block_count != 0 %}
 <div class="h_row_content home_collection section-{{section.id}}" data-animation="fadeInUp">
   <div class="clearfix">
   <h3>{{ section.settings.title }}</h3>   
@@ -29,7 +27,7 @@
           <div class="row view-grid animated fadeInUp" data-animation="fadeInUp" >
             {% for block in section.blocks %}
             {% assign featured = block.settings.collection %}
-           		<div class="col-md-{{ grid_item_width }} col-sm-4 col-xs-12 {%comment%}mb30{%endcomment%}">
+           		<div class="col-md-{{ grid_item_width }} col-sm-{{ grid_item_width }} col-xs-12 {%comment%}mb30{%endcomment%}">
                   {% include 'featured-collection' %}
                 </div>
             {% endfor %} 
@@ -103,6 +101,22 @@
           }
         ],
         "default": "featured"
+      },
+	  {
+        "type": "radio",
+        "id": "show_brand_slider",
+        "label": "Show Brand Slider",
+        "options": [
+          {
+            "value": "yes",
+            "label": "Yes"
+          },
+          {
+            "value": "no",
+            "label": "No"
+          }
+        ],
+        "default": "yes"
       }
 	],
   	 "blocks" : [
@@ -143,4 +157,6 @@
   }
 {% endschema %}
 
+{% if section.settings.show_brand_slider == "yes" %}
 {% include 'brands' %}
+{% endif %}
