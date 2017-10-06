@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" class="noIE">
+<head>
+  
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KTMMH4C');</script>
+<!-- End Google Tag Manager -->
+
+  
+  	<!-- Google Search Console -->
+  	<meta name="google-site-verification" content="et9nri1fC9GMVgqrekH05DNSx0Yz-XNe1ROWM69CeJQ" />
+  	<!-- End of Google Search Console -->
+  
+    <!-- Basic page needs ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Title and description ================================================== -->
+    <title>
+      {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <!-- Helpers ================================================== -->
+    {% include 'social-meta-tags' %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.primary_color }}">
+
+    {% if settings.favicon != empty %}
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+    {% endif %}
+    {{ 'apps.css' | asset_url | stylesheet_tag }}
+    {{ 'style.css' | asset_url | stylesheet_tag }}
+    {{ 'flexslider.css' | asset_url | stylesheet_tag }}
+    {{ 'flexslider-product.css' | asset_url | stylesheet_tag }}
+    
+    {% if settings.header_font contains 'Google' %}
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.header_font | remove: 'Google+' }}:300,400,700,900">
+    {% endif %}
+    {% if settings.base_font contains 'Google' and settings.base_font != settings.header_font %}
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family={{ settings.base_font | remove: 'Google+' }}:300,400,700,900">
+    {% endif %}
+
+    <!-- Header hook for plugins ================================================== -->
+    {{ content_for_header }}
+
+    <!--[if lt IE 9]>
+{{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+<![endif]-->
+
+    {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+    {% endif %}
+
+    {{ 'jquery.js' | asset_url | script_tag }}
+    {% if template == 'index' %}
+    {{ 'owl_carousel.js' | asset_url | script_tag }}
+    {% endif %}
+    {{ 'slick.js' | asset_url | script_tag }}
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+	
+    {% if template contains 'product' or template contains 'collection' %}
+    	{{ 'jquery-ui.min.js' | asset_url | script_tag }}
+    	{{ 'jquery-ui.min.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+
+
+  
+  
+  <!-- Theme Global App JS ================================================== -->
+    <script>
+      var app = app || {
+        data:{
+          template:{{ template | json }},
+          money_format: {{ shop.money_format | default:false | json }}
+        }
+      }
+      function responsive_slick_slider(){
+        {% if template == 'index' or template contains 'product' %}
+        /*if ($(window).innerWidth()<= 992 && $(window).innerWidth() > 590 ) {*/
+          // alert('hiii');
+        /*Neil Where are you*/
+          $('.slider').on('init', function(){
+            $(this).fadeIn("slow");
+          });
+          $(".slider").slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            arrow: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 4,
+                  slidesToScroll: 4,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              }
+              // You can unslick at a given breakpoint now by adding:
+              // settings: "unslick"
+              // instead of a settings object
+            ]
+          });
+        /*
+        }
+        else if ($(window).innerWidth()<590 ) {
+          // alert('hiii');
+          $(".slider").slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            arrow: true
+          });
+        }
+        else {
+          //alert('hello');
+          $(".slider").slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            arrow: true
+          });
+        }
+        */
+        {% endif %}
+        {% if template == 'index' %}
+        $(".owl").owlCarousel133({
+          autoPlay : true,
+          items : 7,
+          itemsDesktop : [1199,5],
+          itemsDesktopSmall : [980,4],
+          itemsTablet: [700,3],
+          itemsMobile : [400,2],
+          slideSpeed : 4000,
+          paginationSpeed : 4000,
+          rewindSpeed : 4000,
+          navigation : true,
+          stopOnHover : true,
+          pagination : false,
+          scrollPerPage:true,
+        });
+        // just for vertical centering the brand icons.
+        var _img_max_height = 0;
+        $(".owl .owl-item .item-inner img").each(function(){
+          if($(this).height() > _img_max_height)
+            _img_max_height = $(this).height();
+        });
+        $(".owl .owl-item .item-inner").css({"line-height":_img_max_height+"px"});
+        {% endif %}
+      }
+      $(document).ready(function(){	
+        responsive_slick_slider();
+      });
+      /*
+      $(window).resize(function(){
+        responsive_slick_slider();
+      });
+      */
+
+    </script>
+
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+  
+  
+
+  
+  
+
+</head>
+  
+  <!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTMMH4C"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+  <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+    
+    
+    
+    
+    
+    <div class="wsmenucontainer clearfix">
+      <div class="overlapblackbg"></div>
+      {% if settings.show_entry_popup %}
+      {% include 'entry-popup' %}
+      {% endif %}
+
+      {% section 'header' %}
+
+      {{ content_for_layout }}
+
+      {% section 'footer' %}
+
+      {{ 'jquery.magnific-popup.min.js' | asset_url | script_tag }}
+      {{ 'api.jquery.js' | asset_url | script_tag }}
+      {{ 'ajaxify-shop.js' | asset_url | script_tag }}
+
+      {% if template contains 'blog' %}
+      {{ "masonry.pkgd.min.js" | asset_url  | script_tag }}
+      {{ "imagesloaded.pkgd.min.js" | asset_url  | script_tag }}
+      {% endif %}
+
+      {% if settings.show_multiple_currencies %}
+      {% include 'currencies' %}
+      {% endif %}
+
+      {% if template == 'index' or template contains 'product' %}
+      {{ 'jquery.owl.min.js' | asset_url | script_tag }}
+      {% endif %}
+
+      {{ 'scripts.js' | asset_url | script_tag }}
+      
+      {{ 'jquery.elevatezoom.js' | asset_url | script_tag }}
+
+      {{ 'custom-scripts.js' | asset_url | script_tag }}
+      
+      <!--script type="text/javascript">
+      (function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = '//api.at.getsocial.io/widget/v1/gs_async.js?id=34285c'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();
+      </script-->
+      {{ 'gs-init.js' | asset_url | script_tag }}
+    </div>
+    
+    
+    
+    <!-- Remaze chatbox JS start -->
+    <script type="text/javascript">
+		var _support = _support || { 'ui': {}, 'user': {} };
+  		_support['account'] = 'thestore';
+  		_support['ui']['anonymousMode'] = 'mixed';
+  		_support['ui']['enableKb'] = 'true';
+  		_support['ui']['styles'] = {
+    		widgetColor: 'rgb(154, 198, 37)',
+  		};
+  		_support['ui']['widget'] = {
+   			icon: 'chat',
+    		label: {
+              text: 'We are pleased to see you here!!! Let us know if you have any questions! 😊',
+              mode: "notification",
+              delay: 3,
+              duration: 30,
+              sound: true,
+              },
+          position: 'bottom-right',
+        };
+      _support['custom_fields'] = {
+        'Area of Inquiry': {
+          type: 'dropdown',
+          value: ['Products','Services','Other'],
+          required: false,
+          placeholder: 'Which field are you exploring?'
+        },
+        'Customer\'s browser infomation': {
+          type: 'hidden',
+          value: window.navigator.userAgent
+        },
+        'Page incur the most questions ': {
+          type: 'hidden',
+          value: window.location.href
+        }
+      };
+    </script>
+	
+    <script>
+      var _support = _support || { 'ui': {}, 'user': {} };
+      _support['ui']['widget'] =  false;
+    </script>
+		
+
+    {{ 'gs-library.js' | asset_url | script_tag }}
+    
+    <!-- Remaze chatbox JS end -->
+    
+
+  
+   
+
+
+
+  
+
+  
+
+  {% include 'social-login' %}  
+
+  
+
+  {% include 'sweettooth-initializer' %}
+
+  {% include 'sweettooth-tab-widget' %}
+
+</body>
+</html>
