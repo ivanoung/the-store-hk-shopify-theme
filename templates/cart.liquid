@@ -29,8 +29,7 @@
                     <ul>
                       <li><div class="thumb"><span> <a href="{{ item.url }}"><img src="{{ item | img_url: '800x' }}"  alt="{{ item.title | escape }}" /></a></span></div></li>
                       <li>
-                        <h5><a href="{{ item.url | within: collections.all }}">{{ item.product.title }}
-<span class='booster-cart-item-success-notes' data-key='{{item.key}}'></span><span class='booster-cart-item-upsell-notes' data-key='{{item.key}}'></span></a></h5>
+                        <h5><a href="{{ item.url | within: collections.all }}">{{ item.product.title }}</a></h5>
                         {% if item.product.variants.size != 0 %}
                         {% unless item.variant.title contains 'Default' %}
                         <p>{{ item.variant.title }}</p>
@@ -69,14 +68,14 @@
                       </li>
                       <li>
                         <p class="mobile-label-total">{{ 'cart.general.total' | t }}</p>
-                        <span class="price money"><span class='booster-cart-item-line-price' data-key='{{item.key}}'>{{ item.line_price | money }}</span></span>
+                        <span class="price money">{{ item.line_price | money }}</span>
                     </ul>
                     {% endfor %}
                   </div>
                   <div class="total_row clearfix">
                     <ul>
                       <li>
-                        <span class="total_val">{{ 'cart.general.subtotal' | t }}:</span><span class="total-price money"><span class="wh-original-cart-total">{{ cart.total_price | money }}</span><span class="wh-cart-total"></span><div class="additional-notes"><span class="wh-minimums-note"></span><span class="wh-extra-note "></span></div></span>
+                        <span class="total_val">{{ 'cart.general.subtotal' | t }}:</span><span class="total-price money">{{ cart.total_price | money }}</span>
                       </li>
                     </ul>
                   </div>
