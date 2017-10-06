@@ -1,0 +1,52 @@
+{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+
+<div class="slider_1 clearfix" data-featured="{{featured_image.id}}" data-image="{{image.id}}">
+  {% if product.images.size == 0 %}
+  <img src="{{ '' | product_img_url: '1024x' }}" alt="Product Image">
+  
+  {% else %} 
+  <div id="image-block" data-zoom="{% if section.settings.show_product_zoom %}disabled{% else %}enabled{% endif %}">
+    <div class="flexslider product_gallery {% if product-images == blank %}product_images{% endif %}" id="product-{{ product.id }}-gallery">
+      <ul class="slides">
+        {% for image in product.images %}
+        <li data-thumb="{{ image | product_img_url: '800x' }}" data-title="{% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}{{ product.title }}{% else %}{{ image.alt | escape }}{% endif %}">
+          {% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}
+          {% assign video = image.alt | split: 'src="' %}
+          {% assign video = video[1] | split: '"' | first %}
+
+          {% if video contains '?' %}
+          {% assign video = video | append: '&amp;autoplay=1' %}
+          {% else %}
+          {% assign video = video | append: '?autoplay=1' %}
+          {% endif %}
+
+          <div class="video-container {% if image.alt contains 'vimeo' %}vimeo{% else %}youtube{% endif %}">
+            <div>
+              <a href="{{ video | strip_html | replace: '/embed/', '/watch?v=' | remove: '?feature=player_detailpage&amp;autoplay=1' }}" title="{{ product.title | escape }}" class="mfp-iframe">
+                {{ image.alt }}
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <a class="image-slide-link" href="{{ image | product_img_url: '1400x' }}" title="{{ image.alt | escape }}">
+            <img src="{{ image | product_img_url: '800x' }}" data-zoom-image="{{ image | product_img_url: '800x' }}" data-src="{{ image | product_img_url: '800x' }}" alt="{{ image.alt | escape }}" data-index="{{ forloop.index0 }}" data-image-id="{{ image.id }}" class="featured_image" />
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+   {% if section.settings.product_additional_img == "carousel" %}
+    <div id="carousel" class="flexslider">
+      <ul class="slides">
+        {% for image in product.images %}
+        <li data-image-id="{{ image.id }}">
+          <img src="{{ image | product_img_url: '800x' }}" />
+        </li>
+        {% endfor %}
+      </ul>
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}                
+</div>

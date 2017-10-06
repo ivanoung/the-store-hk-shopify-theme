@@ -1,0 +1,168 @@
+{% assign block_1 = section.blocks[0] %}
+{% assign block_2 = section.blocks[1] %}
+{% assign block_3 = section.blocks[2] %}
+{% assign block_4 = section.blocks[3] %}
+{% assign blockCount =  section.blocks | size %}
+<div id="footer" >
+  <div class="f_mid">
+    <div class="container">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% case block.type %}
+        
+          {% when 'linklist' %}
+        	{% assign linklist = linklists[block.settings.linklist] %}
+            <div class="{% if blockCount == 4%} col-sm-2 col-ms-6{% elsif blockCount == 3 %}col-sm-2 col-ms-6{% elsif blockCount == 2 %}col-sm-6 col-ms-6{% else %}col-xs-12{% endif %}">
+              <h4>{{ linklist.title }}</h4>
+              {% if linklist != '' %}
+              <ul>
+                {% for link in linklist.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+        
+          {% when 'text' %}
+        	<div class="{% if blockCount == 4%} col-sm-3 col-ms-6{% elsif blockCount == 3 %}col-sm-3 col-ms-6{% elsif blockCount == 2 %}col-sm-6 col-ms-6{% else %}col-xs-12{% endif %}">
+              <h4>{{ block.settings.title }}</h4>
+              <div class="desc">
+                {{ block.settings.text }}
+              </div>
+            </div>
+        
+          {% when 'newsletter' %}
+			<div class="{% if blockCount == 4%} col-sm-2 col-ms-6{% elsif blockCount == 3 %}col-sm-4 col-ms-6{% elsif blockCount == 2 %}col-sm-6 col-ms-6{% else %}col-xs-12{% endif %}">
+              <h4>{{ 'layout.footer.newsletter_title' | t }}</h4>
+              <div class="desc">
+                {{ block.settings.text }}
+              </div>
+              {% include 'newsletter-form' %}
+              {% if block.settings.footer_display_social %}
+              	{% if settings.twitter_link != '' or settings.facebook_link != '' or settings.pinterest_link !='' or settings.google_plus_link != '' or  settings.instagram_link != '' or settings.tumblr_link != '' or settings.youtube_link != '' or settings.vimeo_link != '' %}
+              		{% include 'social-profiles' %}
+              	{% endif %}
+              {% endif %}
+            </div>
+        
+       	{% endcase %}
+        	<div class="medians">&nbsp;</div>
+        {% endfor %}  
+        <div class="col-sm-3 col-ms-6">
+          <h4>Contact Us</h4>
+          <div class="desc">
+            <p class="adress"><span class="ft-content"><span class="font-color-white">2/F, 38 Cochrane Street, Central</span></p>
+            <p class="phone"><span class="ft-content"><span class= "font-color-white">+852 2967 7787</span></span></p>                       
+            <p class="email"><span class="ft-content"><span class="font-color-white">behealthy@thestore.com.hk</span></span></p>  
+            {% if settings.twitter_link != '' or settings.facebook_link != '' or settings.pinterest_link !='' or settings.google_plus_link != '' or  settings.instagram_link != '' or settings.tumblr_link != '' or settings.youtube_link != '' or settings.vimeo_link != '' %}
+             <div class="bottom-header-socials">{% include 'social-profiles' %}</div>
+            {% endif %}
+          </div>
+          	<div class="news_letter_new">
+              <h4>{{ 'layout.footer.newsletter_title' | t }}</h4>
+              <div class="desc">
+                {{ block.settings.text }}
+              </div>
+              {% include 'newsletter-form' %}
+              {% if block.settings.footer_display_social %}
+              	{% if settings.twitter_link != '' or settings.facebook_link != '' or settings.pinterest_link !='' or settings.google_plus_link != '' or  settings.instagram_link != '' or settings.tumblr_link != '' or settings.youtube_link != '' or settings.vimeo_link != '' %}
+              		{% include 'social-profiles' %}
+              	{% endif %}
+              {% endif %}
+            </div>
+        </div>
+        
+      </div> 
+    </div>
+  </div>
+  <div class="f_bot copyright">
+    <div class="container">
+      <!--<div class="f_bot_left">Copyright &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} {{ 'layout.footer.theme_credits_html' | t }} | {{ powered_by_link }}</div>-->
+      <div class="f_bot_left"><span class="font-color-white">Copyright &copy; </span>{{ shop.name | link_to: '/' }}<span class="font-color-white">. All Rights Reserved.</span></div>
+      {% if section.settings.show_payment_methods and shop.enabled_payment_types != empty %}
+      <div class="f_bot_right">
+        <div class="partner">
+          <ul class="list-inline">
+            {% for type in shop.enabled_payment_types %}
+            <li><img src="{{ type | payment_type_img_url }}" alt="{{ type | replace: '_',' '}}" /></li>
+            {% endfor %}
+          </ul>
+        </div> 
+
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Footer",
+	"max_blocks": 8,	
+    "settings": [
+      {
+        "type": "header",
+        "content": "Bottom bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_methods",
+        "label": "Show payment methods"
+      }
+    ],
+    "blocks" : [
+    {
+      "type": "linklist",
+      "name": "Menu",
+      "settings": [
+        {
+           "type": "link_list",
+           "id": "linklist",
+           "label": "Choose menu",
+           "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter / social icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Customers who sign up will have an account created for them in Shopify. You can sync to MailChimp with the official [MailChimp app](https://apps.shopify.com/mailchimp)."
+        },
+        {
+           "type": "textarea",
+           "id": "text",
+           "label": "Newsletter description",
+           "default": "Sign up for our newsletter and be the first to know about coupons and special promotions."
+        },
+		{
+           "type": "checkbox",
+           "id": "footer_display_social",
+           "label": "Enable social icons",
+		   "info": "Edit your social settings in General settings"
+      	}
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Text column"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>This is a custom textbox widget that you can use for any content you'd like.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

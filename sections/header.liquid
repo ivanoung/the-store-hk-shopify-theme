@@ -1,0 +1,400 @@
+{% if section.settings.promo_bar_text != blank %}
+    {% include 'promo-bar' %}
+{% endif %}
+<div id="header" data-section-id="{{ section.id }}" data-section-type="header-section">
+        
+        {% if section.settings.header_style == 'header2' %}
+        {% include 'header-top-logo' %}
+        {% else %}
+        {% include 'header-top' %}
+        {% endif %}
+
+        <div class="header_bot {% if section.settings.sticky_menu %} enabled-sticky-menu {% endif %}">
+          <div class="header_content">
+            <div class="container">
+              {% if section.settings.navigation_type == 'simple' %}
+              {% include 'main-menu-simple' %}
+              {% else %}
+              {% include 'main-menu' %}
+              {% endif %}
+
+            </div>
+          </div>  
+        </div>
+      </div><!-- /header -->
+
+{% assign  logo_height_math = section.settings.logo_height %}
+{% assign  navbar_padding = logo_height_math | minus: 12 | divided_by: 2 | append: 'px'%}
+{% assign  top_menu_padding = logo_height_math | minus: 44 | divided_by: 2 | append: 'px' %}
+{% assign  top_menu_padding_plus10 = logo_height_math | minus: 44 | divided_by: 2 | plus: 10 | append: 'px' %}
+{% assign  fixed_search_padding = logo_height_math | minus: 18 | divided_by: 2 | append: 'px' %}
+{% assign  logo_height = section.settings.logo_height | append: 'px'%}
+<style>
+/*  This code is used to center logo vertically on different devices */
+  
+{% if section.settings.header_style == 'header1' %}
+#header #nav .navbar-nav > li > a, #header .navbar-toggle{
+	{% if section.settings.logo != blank and section.settings.logo_height != blank %}
+    padding-top: {{navbar_padding}};
+	padding-bottom: {{navbar_padding}};
+	{% else %}
+	padding-top:15px;
+	padding-bottom:15px;
+	{% endif %}
+}
+#header #nav .navbar-nav > li > .fixed-search 
+{
+{% if section.settings.logo != blank and section.settings.logo_height != blank %}
+    padding-top: {{fixed_search_padding}};
+	padding-bottom: {{fixed_search_padding}};
+    padding-left:5px;
+	{% else %}
+	padding-top:12px;
+	padding-bottom:12px;
+    padding-left:5px;
+	{% endif %}
+}
+  @media (min-width: 769px) {
+    #header #nav .wsmenu > ul > li > a  {
+      {% if section.settings.logo != blank and section.settings.logo_height != blank %}
+      padding-top: {{navbar_padding}};
+      padding-bottom: {{navbar_padding}};
+      {% else %}
+      padding-top:15px;
+      padding-bottom:15px;
+      {% endif %}
+    }
+  }
+{% elsif section.settings.header_style == 'header2' %}
+#header .hed_right {
+	{% if section.settings.logo != blank and section.settings.logo_height != blank %}
+		{% if section.settings.show_header_phone or section.settings.show_header_email %}
+        padding-top: {{top_menu_padding}};
+		padding-bottom: {{navbar_padding}};
+		{% else %}
+        padding-top: {{top_menu_padding_plus10}};
+		{% endif %}
+	{% else %}
+		{% if section.settings.show_header_phone or section.settings.show_header_email %}
+		padding-top:10px;
+		padding-bottom:10px;
+		{% else %}
+		padding-top:20px;
+		padding-bottom:20px;
+		{% endif %}
+	{% endif %}
+}
+#header .header_top {
+  padding:0;
+}
+{% else %}
+	.logo-centered {
+		width:100%;
+		background:{{ settings.header_bg_color }};
+		border-top:1px solid {{ settings.header_border_color }};
+	}
+	.logo-centered a {
+		font-size:26px;
+		padding:0;
+	}
+	.logo-centered img {
+		margin:0 auto;
+		text-align: center;
+		padding:10px 0;
+		max-width:350px;
+		max-height:120px;
+	}
+	#header .logo-text {
+		display: block;
+		text-align: center;
+		padding:20px 0;
+	}
+{% endif %}
+#header .navbar-toggle, #header .navbar-cart {
+	{% if section.settings.logo != blank and section.settings.logo_height != blank%}
+	padding-top: {{navbar_padding}};
+	padding-bottom: {{navbar_padding}};
+	{% else %}
+	padding-top:15px;
+	padding-bottom:15px;
+	{% endif %}
+}
+#header a.navbar-brand {
+  height:auto;
+}
+@media (max-width: 600px) {
+ #header .navbar-brand > img {
+    max-width: 158px;
+  }
+}
+@media (max-width: 600px) {
+	#header .navbar-toggle, #header .navbar-cart {
+		{% if section.settings.logo != blank and section.settings.logo_height != blank and section.settings.mobile_padding != blank %}
+		padding-top: {{ section.settings.mobile_padding }}px;
+		padding-bottom: {{ section.settings.mobile_padding }}px;
+		{% else %}
+		padding-top:15px;
+		padding-bottom:15px;
+		{% endif %}
+	}
+}
+{% if section.settings.header_style == 'header2' %}
+#header .hed_right .header-contact {
+	clear:right;
+	float:right;
+	margin-top:10px;
+}
+@media (max-width: 989px) {
+	#header .hed_right ul li {
+		padding:0 10px;
+	}
+}
+
+@media (max-width: 767px) {
+	#header .hed_right, #header .hed_right .header-contact {
+		padding:0;
+		float:none;
+		text-align: center;
+	}
+}
+@media  (min-width: 768px) and (max-width: 800px) {
+  #header .hed_right ul {
+    float:left !important;
+  }
+}
+{% endif %}
+
+@media (max-width: 900px) {
+
+  #header #nav .navbar-nav > li > a {
+    font-size: 12px;
+    line-height: 32px;
+    padding-left:7px;
+    padding-right:7px;
+  }
+
+  #header .navbar-brand {
+    font-size: 22px;
+    line-height: 20px;
+    {% if section.settings.logo != blank %}
+    padding:0 15px 0 0;
+    {% else %}
+    padding:20px 10px 15px 0;
+    {% endif %}
+  }
+
+  #header .right_menu > ul > li > a {
+    margin: 0 0 0 5px;
+  }
+  #header #nav .navbar:not(.caret-bootstrap) .navbar-nav:not(.caret-bootstrap) li:not(.caret-bootstrap) > a.dropdown-toggle:not(.caret-bootstrap) > span.caret:not(.caret-bootstrap) {
+    margin-left: 3px;
+  }
+}
+
+@media  (min-width: 768px) and (max-width: 800px) {
+  #header .hed_right, #header .top_menu {
+    padding:0 !important;
+  }
+  #header .hed_right ul {
+    display:block !important;
+    {% if section.settings.header_style != 'header2' %}
+    float:right !important;
+    {% endif %}
+  }
+  #header .hed_right .header-contact {
+    margin-top:0 !important;
+  }
+  #header .top_menu {
+    float:left !important;
+  }
+}
+
+@media (max-width: 480px) {
+	#header .hed_right ul li {
+		margin: 0;
+		padding: 0 5px;
+		border: none;
+		display: inline-block;
+	}
+}
+
+.navbar:not(.no-border) .navbar-nav.dropdown-onhover>li:hover>a {
+	margin-bottom:0;
+}
+
+
+figure.effect-chico img {
+	-webkit-transform: scale(1) !important;
+	transform: scale(1) !important;
+}
+   
+figure.effect-chico:hover img {
+	-webkit-transform: scale(1.2) !important;
+	transform: scale(1.2) !important;
+}
+{% if section.settings.header_style != 'header1' %}
+@media (min-width: 769px)
+  {
+   #header #nav .wsmenu > ul > li > a  {
+	padding-top:15px;
+	padding-bottom:15px;
+   }
+  }
+{% endif %}
+{% unless section.settings.header_style == 'header1' %}
+  #header .nav > li:first-child > a {
+    padding-left:0;
+  }
+{% endunless %}
+</style>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "select",
+        "id": "header_style",
+        "label": "Choose layout",
+        "info": "[Learn more](https:\/\/support.milehighthemes.com\/hc\/en-us\/articles\/208378123)",
+        "options": [
+          {
+            "value": "header1",
+            "label": "Logo left, navigation right"
+          },
+          {
+            "value": "header2",
+            "label": "Logo and links top, navigation below"
+          },
+          {
+            "value": "header3",
+            "label": "Logo centered top, navigation below"
+          }
+        ]
+      },	
+      {
+        "type": "header",
+        "content": "Top bar"
+      },
+      {
+        "type": "richtext",
+        "id": "promo_bar_text",
+        "label": "Text"
+      },
+      {
+        "type": "header",
+        "content": "Subnavigation"
+      },
+      {
+        "type": "select",
+        "id": "heading_content",
+        "label": "Choose content",
+        "options": [
+          {
+            "value": "links",
+            "label": "Links"
+          },
+          {
+            "value": "text",
+            "label": "Text"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ],
+        "default": "links"
+      },
+      {
+        "type": "link_list",
+        "id": "header_top_linklist",
+        "label": "Choose menu"
+      },
+      {
+        "type": "richtext",
+        "id": "header_top_text",
+        "label": "Text"
+      },
+      {
+        "type": "text",
+        "id": "header_phone",
+        "label": "Phone number",
+        "default": "800.555.5555"
+      },
+      {
+        "type": "text",
+        "id": "header_email",
+        "label": "Email address",
+        "default": "example@cooktime.com"
+      },
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Image",
+        "info": "350 x 120px max"
+      },
+      {
+        "type": "text",
+        "id": "logo_height",
+        "label": "Navigation bar height",
+        "info": "Vertically align your menu by entering the pixel height of your logo."
+      },
+      {
+        "type": "text",
+        "id": "mobile_padding",
+        "label": "Mobile nav button padding",
+        "info": "Adjusts positioning of navigation icons on mobile devices. [Learn more](https:\/\/milehighthemes.zendesk.com\/hc\/en-us\/articles\/217741863)"
+      },
+      {
+        "type": "select",
+        "id": "search_style",
+        "label": "Search style",
+        "options": [
+          {
+            "value": "icon",
+            "label": "Icon"
+          },
+          {
+            "value": "bar",
+            "label": "Search bar"
+          }
+        ],
+        "default": "icon"
+      },
+	  {
+        "type": "header",
+        "content": "Main navigation"
+      },
+	  {
+        "type": "radio",
+        "id": "navigation_type",
+        "label": "Choose type",
+        "info": "[Learn more](https:\/\/support.milehighthemes.com\/hc\/en-us\/articles\/211558583--Video-Creating-drop-down-and-mega-menus-in-our-themes)",
+        "options": [
+          {
+            "value": "simple",
+            "label": "Simple"
+          },
+          {
+            "value": "advanced",
+            "label": "Mega menu"
+          }
+        ]
+      },
+	  {
+        "type": "link_list",
+        "id": "header_main_linklist",
+        "label": "Choose menu"	
+      },
+	  {
+        "type": "checkbox",
+        "id": "sticky_menu",
+        "label": "Enable sticky menu"
+      }	
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,94 @@
+<div id="content">
+  <div class="container" data-section-id="{{ section.id }}" data-section-type="contact-page-section">
+    {% include 'breadcrumb' %}
+    <div class="title clearfix">
+      <h1>{{ page.title }}</h1>
+    </div>
+    <div class="contact_c">
+      {% if section.settings.show_google_map %}
+       <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDoRMxiPsqJ9SUuaK1KsCAjd3gqnecjlBw&amp"></script>
+      <div class="box contact-box animated rollIn" data-animation="rollIn" >
+ 		 <div id="map-canvas" data-lat="{{ section.settings.google_lat}}" data-long="{{ section.settings.google_long}}"></div>
+	  </div>
+      {% endif %}
+      <div class="row">
+        <div class="col-sm-6 bounceInLeft animated animation-done" data-animation="bounceInLeft">
+          <div class="infor_c">
+            <h5 class="box-heading">{{ 'pages.contact.heading_info_box' | t }}</h5>
+            <div class="rte">
+              {{ page.content }}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 animated bounceInRight animation-done" data-animation="bounceInRight">
+          <div class="con_frm">
+            <h5 class="box-heading">{{ 'pages.contact.heading_contact_box' | t }}</h5>
+            {% form 'contact' %}
+            <div class="frm con_frm_inn">
+              <div class="row">
+              {% if form.posted_successfully? %}
+              <div class="alert alert-success m15">
+                {{ 'contact.form.post_success' | t }}
+              </div>
+              {% endif %}
+              <div class="m15">
+                {% include 'form-errors-custom' %}
+              </div>
+              
+                <div class="col-sm-6">
+                  
+                  <div class="lbltxt">{{ 'contact.form.name' | t }}:<span class="req">*</span></div>
+                  <input type="text" id="contactFormName" class="txtbox" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                </div>
+                <div class="col-sm-6">
+                  <div class="lbltxt">{{ 'contact.form.email' | t }}:<span class="req">*</span></div>
+                  <input type="email" name="contact[email]" id="contactFormEmail" class="txtbox" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="lbltxt">{{ 'contact.form.phone' | t }}:</div>
+                  <input type="tel" name="contact[phone]" id="contactFormPhone" class="txtbox" pattern="[0-9]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                </div>
+              </div>
+              <div class="lbltxt">{{ 'contact.form.message' | t }}: <span class="req">*</span></div>
+              <textarea name="contact[body]" id="contactFormMessage">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+              <div class="clearfix frm_bot">
+                <input type="submit" class="btn_c" value="{{ 'contact.form.send' | t }}">
+                <input type="reset" class="info_btn" value="{{ 'contact.form.clear' | t }}">
+                <span class="reqired">* {{ 'contact.form.required' | t }}</span>
+              </div>
+            </div>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Contact page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_google_map",
+        "label": "Enable Google map"
+      },
+      {
+        "type": "text",
+        "id": "google_lat",
+        "label": "Latitude coordinates",
+        "info": "[Find your coordinates](http:\/\/itouchmap.com\/latlong.html)",
+        "default": "37.783914"
+      },
+      {
+        "type": "text",
+        "id": "google_long",
+        "label": "Longitude coordinates",
+        "info": "[Find your coordinates](http:\/\/itouchmap.com\/latlong.html)",
+        "default": "-122.403297"
+      }
+    ]
+  }
+{% endschema %}

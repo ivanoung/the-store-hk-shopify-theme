@@ -1,0 +1,20 @@
+{% unless grid_item_width %}
+{% assign grid_item_width = '4' %}
+{% endunless %}
+
+<div class="main_box">
+  <div class="box_1">
+    {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+    <a href="{{ collection.url }}" title="Browse our {{ collection_title }} collection">
+        {% if collection.image %}
+        {{ collection.image.src | collection_img_url: '800x' | img_tag: collection_title }}
+        {% else %}
+        {{ collection.products.first.featured_image | product_img_url: '800x' | img_tag: collection_title }}
+        {% endif %}
+      </a>
+  </div>
+  <div class="desc">
+    <h5><a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}">{{ collection.title }}</a></h5>
+    <p>({{ 'collections.general.items_with_count' | t: count: collection.all_products_count }})</p>
+  </div>
+</div>

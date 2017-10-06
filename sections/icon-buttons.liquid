@@ -1,0 +1,91 @@
+{% assign blockCount =  section.blocks | size %}
+<div id="call-to-action" >
+  <div class="f_top">
+    <div class="container">
+      <div class="row">
+        {% for block in section.blocks %}
+          <div {{ block.shopify_attributes }} class="{% if blockCount == 4%} col-lg-3 col-md-3 col-sm-3 col-ms-6 {% elsif blockCount == 3 %} col-lg-4 col-md-4 col-sm-4 col-ms-4{% elsif blockCount == 2 %} col-lg-6 col-md-6 col-sm-6 col-ms-6 {% else %} col-lg-12 col-md-12 col-sm-12 col-ms-12 {% endif %} col-xs-12">
+           <div class="ftop_blk {% if forloop.last == true %} bor_none {% endif %}">
+            <a href="{{ block.settings.cta_link }}"><h5>{{ block.settings.cta_text }} <span class="fa fa-arrow-circle-right"></span></h5></a>
+            <span class="icon"><i class="fa fa-{{ block.settings.cta_icon }}"></i></span> 
+           </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Icon buttons",
+	"max_blocks": 4,	
+    "blocks" : [
+      {
+        "type": "text",
+        "name": "Call to action box",
+        "settings": [
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "Text"
+      },
+	  {
+        "type": "paragraph",
+        "content": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "cta_icon",
+        "label": "fa-",
+		"info": "[See icon choices](http:\/\/fontawesome.io\/icons\/)"
+      },
+      {
+        "type": "url",
+        "id": "cta_link",
+        "label": "Link URL"
+      }
+    ]
+   }
+],
+"presets": [{
+    "name": "Icon buttons",
+    "category": "Text",
+    "settings": {
+    },
+    "blocks": [
+      {
+        "type": "text",
+		 "settings": {
+              "cta_text": "Icon Button Text",
+              "cta_icon": "fighter-jet",
+              "cta_link": ""
+         }
+      },
+      {
+        "type": "text",
+        "settings": {
+              "cta_text": "Icon Button Text",
+              "cta_icon": "compass",
+              "cta_link": ""
+            }
+      },
+	  {
+        "type": "text",
+        "settings": {
+              "cta_text": "Icon Button Text",
+              "cta_icon": "clock-o",
+              "cta_link": ""
+            }
+      },
+	  {
+        "type": "text",
+        "settings": {
+              "cta_text": "Icon Button Text",
+              "cta_icon": "refresh",
+              "cta_link": ""
+            }
+      }	
+    ]
+  }]
+}
+{% endschema %}

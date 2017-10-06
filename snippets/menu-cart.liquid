@@ -1,0 +1,107 @@
+<div class="menu_c cart_menu">
+  <div class="menu_title clearfix">
+    <h4>{{ 'cart.general.title' | t }}</h4>
+  </div>
+  {% if cart.item_count > 0 %}
+  <form action="/cart" method="post" novalidate>
+    <div class="cart_row">
+      <ul>
+        <li>{{ 'cart.general.photo' | t }}</li>
+        <li>{{ 'cart.general.name' | t }}</li>
+        <li>{{ 'cart.general.price' | t }}</li>
+        <li>{{ 'cart.general.quantity' | t }}</li>
+        <li>{{ 'cart.general.total' | t }}</li>
+      </ul>
+      {% for item in cart.items %}
+      <ul>
+        <li>
+          <div class="thumb">
+            <a href="{{ item.product.url }}">  
+              <img src="{{ item.product.featured_image.src | product_img_url: '300x' }}" alt="{{ item.title | escape }}" />
+            </a>
+          </div>
+        </li>
+        <li>
+          <h5><a href="{{ item.product.url | within: collections.all }}" class="item-name">{{ item.product.title }}
+<span class='booster-cart-item-success-notes' data-key='{{item.key}}'></span><span class='booster-cart-item-upsell-notes' data-key='{{item.key}}'></span></a></h5>
+          {% unless item.variant.title contains 'Default' %}
+          <p>{{ item.variant.title }}</p>
+          {% endunless %}
+          <a href="#" data-id="{{ item.id }}" class="remove_item_button">{{ 'cart.general.remove' | t }}</a>
+        </li>
+        <li>
+          <p class="mobile-label-price">Price</p>
+          <span class="price money">{{ item.price | money }}</span>
+        <li>
+          <p class="mobile-label-quantity">Quantity</p>
+          <a class="minus_btn"></a>
+          <input type="text" id="updates_{{ item.id }}" name="updates[]" class="txtbox" value="{{ item.quantity }}" min="0" data-id="{{ item.id }}"/>
+          <a class="plus_btn"></a>
+          <div class="ajaxcart__errors text-center ajaxcart__item__{{ item.id }}__errors">
+            {{ 'cart.general.error' | t }}
+          </div>
+        </li>
+        <li>
+          <p class="mobile-label-total">Total</p>
+          <span class="price money"><span class='booster-cart-item-line-price' data-key='{{item.key}}'>{{ item.line_price | money }}</span></span>
+          <!--          <a href="#" data-id="{{ item.id }}" class="del_btn remove_item_button"></a> -->
+        </li>
+      </ul>
+      {% endfor %}
+    </div>
+    <div class="total_row clearfix">
+      <ul>
+        <li>
+          <span class="total_val">{{ 'cart.general.subtotal' | t }}:</span><span class="money total-price"><span class="wh-original-cart-total">{{ cart.total_price | money }}</span><span class="wh-cart-total"></span><div class="additional-notes"><span class="wh-minimums-note"></span><span class="wh-extra-note "></span></div></span>
+        </li>
+      </ul>
+    </div>
+    {% if settings.cart_notes %}
+    <div class="clearfix order_notes">
+      <label for="cartSpecialInstructions" class="sr-only">{{ 'cart.general.note' | t }}:</label>
+      <textarea name="note" id="cartSpecialInstructions" placeholder="{{ 'cart.general.note' | t }}">{% if cart.note != null %}{{cart.note}}{% endif %}</textarea>
+    </div>
+    {% endif %}
+    {% if settings.show_currency_disclaimer %}
+    {{ 'cart.general.currency_disclaimer_html' | t: shopname: shop.name, currency: shop.currency }}
+    {% endif %}
+    {% comment %}
+    <div>
+      <p style="float: none; text-align: right; clear: both; margin: 10px 0;">
+        <input style="float:none; vertical-align: middle;" type="checkbox" id="agree" class="cart_agree" />
+        <label style="display:inline; float:none" for="agree">
+          I agree with the <a href="/pages/terms-conditions">terms and conditions</a>.
+        </label>
+       </p>
+    </div>
+    {% endcomment %}
+    <div class="checkout_row clearfix">
+      <button type="submit" name="checkout" value="{{ 'cart.general.checkout' | t }}" class="btn_c">{{ 'cart.general.checkout' | t }}</button>
+      <a href="javascript:void(0)" class="info_btn"><span class="fa fa-chevron-left"></span>{{ 'cart.general.continue_browsing' | t }}</a>
+
+    </div>
+    {% if additional_checkout_buttons %}
+    <div class="addCheckOut">
+      <div class="additional-checkout">
+        {{ content_for_additional_checkout_buttons }}
+      </div>
+    </div> 
+    {% endif %}
+
+  </form>
+
+  {% else %}
+  <div class="cart_row">
+    <div class="empty-cart">{{ 'cart.general.empty' | t }}</div>
+    <p><a href="javascript:void(0)" class="btn_c btn_close">{{ 'cart.general.continue_browsing' | t }}</a></p>
+  </div>
+  {% if additional_checkout_buttons %}
+  <div class="addCheckOut" style="display:none">
+    <div class="additional-checkout">
+      {{ content_for_additional_checkout_buttons }}
+    </div>
+  </div> 
+  {% endif %}
+  {% endif %}
+
+</div>

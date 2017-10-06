@@ -1,0 +1,50 @@
+{% if false %}
+<div class="header_top">
+  <div class="container">
+    <div class="top_menu">
+      {% if section.settings.heading_content != 'none' %}
+      <ul>
+        {% if section.settings.heading_content == 'links' %}
+        {% for link in linklists[section.settings.header_top_linklist].links %}
+        {% if link.url and link.title %}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% else %}
+        <li>{{ 'general.header.no_links' | t }}</li>
+        {% endif %}
+        {% endfor %}
+        {% elsif section.settings.heading_content == 'text' and section.settings.header_top_text != blank %}
+        <li><span class="header-top-text">{{ section.settings.header_top_text }}</span></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="hed_right">
+      <ul>
+        {% if section.settings.header_phone != blank %}
+        <li><a href="tel:{{ section.settings.header_phone }}"><span class="fa fa-phone"></span>{{ section.settings.header_phone }}</a></li>
+        {% endif %}
+        {% if settings.twitter_link != '' or settings.facebook_link != '' or settings.pinterest_link !='' or settings.google_plus_link != '' or  settings.instagram_link != '' or settings.tumblr_link != '' or settings.youtube_link != '' or settings.vimeo_link != '' %}
+        <li class="top-header-socials">{% include 'social-profiles' %}</li>
+              	{% endif %}
+        
+        {% if section.settings.header_email != blank %}
+        <li><a href="mailto:{{ section.settings.header_email }}"><span class="fa fa-envelope"></span>{{ section.settings.header_email }}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% if section.settings.header_style == 'header3' %}
+<div class="logo-centered clearfix hidden-ms hidden-xs">
+  {% if section.settings.logo != blank %}
+  <a href="/" itemprop="url">
+    <img src="{{ section.settings.logo | img_url: '550x' }}" alt="{{ shop.name }}" class="img-responsive" itemprop="logo" />
+  </a>
+  {% else %}
+  <div class="logo-text">
+    <a class="text-logo" href="/" itemscope itemtype="http://schema.org/Organization">{{ shop.name }}</a>
+  </div>
+  {% endif %}
+</div> 
+{% endif %}

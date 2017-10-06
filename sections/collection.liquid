@@ -1,0 +1,266 @@
+{% paginate collection.products by section.settings.pagination_limit %}
+
+{% if section.settings.product_grid_layout == '4-col' %}
+{% assign grid_item_width = '3' %}
+{% elsif section.settings.product_grid_layout == '3-col' %}
+{% assign grid_item_width = '4' %}
+{% else %}
+{% assign grid_item_width = '6' %}
+{% endif %}
+
+{% assign on_sale = false %}
+{% if product.available and product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+{% assign sold_out = false %}
+{% endif %}
+<div class="hidden">{{ collection.url }}</div>
+<div id="content">
+  <div class="container" data-section-id="{{ section.id }}" data-section-type="collection-page-section">
+    {% include 'breadcrumb' %}
+    <div class="catalog_c">
+      {% if collection.image or collection.description.size > 0 %}
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="box collection-box animated rollIn" data-animation="rollIn" >
+           {% comment %}
+            {% if collection.image %}
+            <!--<img src="{{ collection | img_url: '1400x' }}" alt="{{ collection.title }}" />-->
+            {% endif %}
+            {% endcomment %}
+            {% if collection.description.size > 0 %}
+            
+            <div class="row">
+            
+              <div class="col-md-2 col-sm-12"><img src="{{ collection | img_url: '1400x' }}" alt="{{ collection.title }}" /></div>
+              <div class="col-md-10 col-sm-12">
+                <div class="rte">
+                  {{ collection.description }}
+                </div>
+              </div>
+            
+            </div>
+              
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <!--<div class="title clearfix">
+        <h1>{{ collection.title }}</h1>
+      </div>-->
+
+      <div class="row">
+        <div class="{% if section.settings.show_collection_sidebar %}col-md-12 {%comment%} col-md-push-3 col-sm-8 col-sm-push-4{%endcomment%}{% else %} col-sm-12 {% endif %}">
+          <div class="product_c">
+            <div class="filter_c">
+              {% include 'collection-views' %}
+              {% include 'collection-sorting' %}
+            </div>
+            
+            <div class="collection-grid view-grid animated  fadeInUp" data-animation="fadeInUp">
+              {% for product in collection.products %}
+            
+              <div class="{%comment%}col-md-{{ grid_item_width }}{%endcomment%} col-cus-md-5 col-sm-6 col-xs-12 element mb30 collection-hldr">
+                {% include 'product-loop' %}
+              </div>
+           
+              {% else %}
+              <p class="no-products">{{ 'collections.general.no_matches' | t }}</p>
+              {% endfor %}
+            </div>
+          
+            {% if paginate.pages > 1 %}
+            {% include 'pagination-custom' %}
+            {% endif %}
+
+          </div>
+        </div>
+        
+        {% comment %}
+        {% if section.settings.show_collection_sidebar %}
+          <div class="col-md-3 col-md-pull-9 col-sm-4 col-sm-pull-8">
+          {% include 'sidebar-collection' %}
+          </div>
+        {% endif %}
+        {% endcomment %}
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endpaginate %}
+
+{% schema %}
+   {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Display options"
+      },
+      {
+        "type": "select",
+        "id": "product_grid_layout",
+        "label": "Grid layout",
+        "options": [
+          {
+            "value": "4-col",
+            "label": "Four columns"
+          },
+          {
+            "value": "3-col",
+            "label": "Three columns"
+          },
+          {
+            "value": "2-col",
+            "label": "Two columns"
+          }
+        ],
+        "default": "4-col"
+      },
+      {
+        "type": "select",
+        "id": "pagination_limit",
+        "label": "Products per page",
+        "options": [
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "10",
+            "label": "10"
+          },
+		  {
+            "value": "15",
+            "label": "15"
+          },
+          {
+            "value": "20",
+            "label": "20"
+          },
+          {
+            "value": "25",
+            "label": "25"
+          },
+          {
+            "value": "30",
+            "label": "30"
+          },
+          {
+            "value": "50",
+            "label": "50"
+          }
+        ],
+        "default": "15"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_grid_type",
+        "label": "Show product type"
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_overlay",
+        "label": "Enable product quick view"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_product_swatches",
+        "label": "Enable swatches in quick view"
+      },
+	  {
+        "type": "header",
+        "content": "Sidebar"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_collection_sidebar",
+        "label": "Enable"
+      },
+      {
+        "type": "select",
+        "id": "collection_sidebar_filters",
+        "label": "Product filtering method",
+        "options": [
+          {
+            "value": "groups",
+            "label": "Group filtering"
+          },
+          {
+            "value": "simple-tags",
+            "label": "Simple tag list"
+          },
+          {
+            "value": "none",
+            "label": "No filtering"
+          }
+        ],
+        "default": "simple-tags",
+        "info": "[Learn how to setup group filtering](https:\/\/support.milehighthemes.com\/hc\/en-us\/articles\/208261956--Video-Enable-and-use-group-filtering)"
+      },
+      {
+        "type": "text",
+        "id": "group_array",
+        "label": "Type desired group order in a comma-separated list",
+        "info": "e.g. Brand,Product Type,Burn Time,Color"
+      },
+      {
+        "type": "link_list",
+        "id": "collection_link_list",
+        "label": "Custom menu"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sidebar_collections",
+        "label": "Show all collections"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sidebar_vendors",
+        "label": "Show all vendors"
+      },
+      {
+        "type": "collection",
+        "id": "sidebar_collection_sale_collection",
+        "label": "Featured products collection"
+      },
+      {
+        "type": "select",
+        "id": "sidebar_collection_product_count",
+        "label": "Number of products",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ],
+        "default": "4"
+      }
+    ]
+  }
+{% endschema %}
