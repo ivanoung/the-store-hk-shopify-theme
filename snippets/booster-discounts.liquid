@@ -1,3 +1,4 @@
+
 <style type="text/css">
   .ba-vol-wrapper{
     margin-top:20px;
@@ -69,6 +70,7 @@
     left: 0px;
     width: 100%;
     margin: 0px;
+    margin-bottom:20px;
     text-align: center;
     text-transform: none;
   }
@@ -492,6 +494,7 @@
         text-transform: uppercase;
         font-weight: 500;
         padding: 10px;
+        height:100%;
     }
 
     .with-total.ba-product-bundle .bundle-total button.add-booster-bundle {
@@ -772,7 +775,6 @@
   font-size: 14px;
   line-height: 1.42857143;
   text-align: center;
-  white-space: nowrap;
   vertical-align: middle;
   letter-spacing: 1px;
   -ms-touch-action: manipulation;
@@ -874,7 +876,6 @@
   font-size: 100%;
 }
 
-
 @media (min-width: 0px) {
   .dp-popup-dpModal {
     min-width:0px;
@@ -953,8 +954,6 @@
   }
 
 
-  
-
   .dp-popup-dpModal a.close-dpModal {
     position: absolute;
     top: -12.5px;
@@ -973,23 +972,64 @@
     padding-bottom: 20px;
   }
 
-  .dp-popup div{
+  .dp-popup .multiple-products-true div{
+    display:block;
+    float:left;
+  }
+
+  .dp-popup .multiple-products-false div{
     display:block;
   }
 
-  .dp-popup .image img{
-    max-width: 100px;
+  .dp-popup .multiple-products-false div.product-container{
+    max-width:350px;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
   }
 
-  .dp-popup .details{
+  .dp-popup .multiple-products-false .image{
+    width:100%;
+  }
+
+  .dp-popup .multiple-products-true .image{
+    width:100px;
+  }
+
+  .dp-popup .multiple-products-false .image img{
+    max-width: 150px;
+    max-height:150px;
+  }
+
+  .dp-popup .multiple-products-true .image img{
+    max-width: 100px;
+    max-height:100px;
+  }
+
+  .dp-popup .multiple-products-false .details{
+    width:100%;
+    text-align:center;
+    font-size:14px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top:20px;
+  }
+
+  .dp-popup .multiple-products-true .details{
     width:60%;
     text-align:left;
     font-size:14px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
-  .dp-popup .actions{
+  .dp-popup .multiple-products-false .actions{
+    width:100%;
+    text-align:center;
+    padding-top:20px;
+  }
+
+  .dp-popup .multiple-products-true .actions{
     vertical-align:middle;
     max-width: 116px;
     width:100%;
@@ -1019,20 +1059,10 @@
     float:none;
   }
 
-  .dp-popup .product-title{
-    color: #ffffff;
-  }
-
-  .dp-popup .product-price{
-    width:100%;
-    font-weight:bold;
-  }
-
   .dp-popup .no-thanks{
     text-align: center;
     width: 100%;
   }
-
 
   .dp-popup-dpModal .ba-image{
     width:100%;
@@ -1047,22 +1077,36 @@
     color: #fff;;
     font-size: 100%;
     background-color: #a1c65b;;
-    font-weight: bold;
-    margin: 0px;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-family: inherit;
-    text-transform: uppercase;
-    font-weight: 500;
-    padding: 15px;
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
     text-align: center;
     vertical-align: middle;
+    letter-spacing: 1px;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-weight:500;
+    width:100%;
   }
 
   .ba-price .ba-regular{
     width:100%;
+  }
+
+  .product-price .ba-sale{
+    display:block;
+    width:100%;
+    font-weight:normal;
   }
 
   .discount-applies-true .ba-price .ba-sale{
@@ -1070,7 +1114,62 @@
     width:100%;
   }
 
-  
+  .discount-applies-true .product-price .ba-sale{
+    display:block;
+    width:100%;
+    color:#8C0000;
+    font-weight:normal;
+    opacity:0.8;
+  }
+
+
+  .discount-applies-true .product-price .upsell-note{
+    display:block;
+    font-weight:normal;
+    width:100%;
+  }
+
+  .discount-applies-false .product-price .upsell-note{
+    display:none;
+  }
+
+  #dpModal-container .product-title{
+    font-weight:400;
+    width:100%;
+  }
+
+  .dp-popup-dpModal .upsell-title{
+    font-family: inherit;
+    font-weight: normal;
+    line-height: 1.1;
+    color: inherit;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+
+  @media (max-width: 650px) {
+    .dp-popup .multiple-products-true .details {
+      width: 60%;
+      padding-left: 20px;
+    }
+
+    .dp-popup .multiple-products-true .actions {
+      max-width: inherit;
+      width: 100%;
+      padding-top: 15px;
+    }
+
+    .dp-popup .product-container{
+      padding-bottom: 20px;
+      padding-top:20px;
+    }
+
+
+  }
+
   .ba-bundle-wrapper .ba-product-bundle button.add-booster-bundle{
     cursor: pointer;
     background-color: #a1c65b;
@@ -1255,48 +1354,43 @@ return d?[" && ",f]:[" != null ? ",f," : ",e]})},resolvePossibleLambda:function(
 
 
 <script id="ba-upsell" type="text/x-handlebars-template">
-
   <div id='dpModal-container' style='display:none;' class='dp-popup dp-wrap dp-whModal'>
-
-  <div id="{{css_length}}-product" class="ba-product-bundle">    
-      <div class="bundle-title">{{upsell_note}}</div>
-        {{#products}}      
-          <div class="ba-product-wrapper" data-product-id="{{id}}" data-variant-id="{{variants.0.id}}" data-quantity="{{qty_left}}">
-            <a href="/products/{{handle}}">
-              <div class="ba-image">
-                <img src="{{{image.src}}}"/>
-              </div>
+    <div id="{{css_length}}-product" class="multiple-products-{{multiple_products}} ba-product-bundle">
+      <h3 class="upsell-title">{{upsell_note}}</h3>
+      {{#products}}
+        <div class="product-container discount-applies-{{discount_applies}}" data-product-id="{{id}}" data-variant-id="{{variants.0.id}}" data-quantity="{{qty_left}}">
+          <div class="image">
+            <a href="/products/{{handle}}" target="_blank">
+              <img src="{{{image.src}}}"/>
             </a>
-            <a href="/products/{{handle}}">
-              <div class="bundle-name">{{title}} x {{qty_left}}</div>
-            </a>
-            <div class="booster-variants-container" style="{{{variantsStyle}}}">
-              {{{variantsSelect}}}
+          </div>
+          <div class="details multiple-variants">
+            <div class="product-title">
+              <a href="/products/{{handle}}" target="_blank">
+                {{title}} x {{qty_left}}
+              </a>
             </div>
-            
-            <div class="ba-price">
-              
+            <div class="product-price">
               <span class="ba-sale">{{{variants.0.price}}}</span>
+              <span class="upsell-note">{{upsell_note}}</span>
             </div>
-
-            <div class="upsell-total">
-              <button class="add-upsells">Add to cart</button>
-            </div> 
-
           </div>
 
-        {{/products}}
+          <div class="actions">
+            {{{variantsSelect}}}
+            <button class="add-upsells">Add to cart</button>
+          </div>
 
-                
-      </div>
+          
 
-
-
+        </div>
+      {{/products}}
+    </div>
     <div class="no-thanks">
       <a href="#" data-offer-id="{{offer_id}}">No thanks</a>
     </div>
-
- </script>
+  </div>
+</script>
 
 {% endraw %}
 
@@ -1350,6 +1444,8 @@ function reqJquery(onload) {
 }
 
 reqJquery(function($){
+
+  var dpQuery=$,dpModals=[],getCurrent=function(){return dpModals.length?dpModals[dpModals.length-1]:null},selectCurrent=function(){var a,b=!1;for(a=dpModals.length-1;a>=0;a--)dpModals[a].$blocker&&(dpModals[a].$blocker.toggleClass("current",!b).toggleClass("behind",b),b=!0)};dpQuery.dpModal=function(a,b){var c,d;if(this.$body=dpQuery("body"),this.options=dpQuery.extend({},dpQuery.dpModal.defaults,b),this.options.doFade=!isNaN(parseInt(this.options.fadeDuration,10)),this.$blocker=null,this.options.closeExisting)for(;dpQuery.dpModal.isActive();)dpQuery.dpModal.close();if(dpModals.push(this),a.is("a"))if(d=a.attr("href"),/^#/.test(d)){if(this.$elm=dpQuery(d),1!==this.$elm.length)return null;this.$body.append(this.$elm),this.open()}else this.$elm=dpQuery("<div>"),this.$body.append(this.$elm),c=function(a,b){b.elm.remove()},this.showSpinner(),a.trigger(dpQuery.dpModal.AJAX_SEND),dpQuery.get(d).done(function(b){if(dpQuery.dpModal.isActive()){a.trigger(dpQuery.dpModal.AJAX_SUCCESS);var d=getCurrent();d.$elm.empty().append(b).on(dpQuery.dpModal.CLOSE,c),d.hideSpinner(),d.open(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)}}).fail(function(){a.trigger(dpQuery.dpModal.AJAX_FAIL);var b=getCurrent();b.hideSpinner(),dpModals.pop(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)});else this.$elm=a,this.$body.append(this.$elm),this.open()},dpQuery.dpModal.prototype={constructor:dpQuery.dpModal,open:function(){var a=this;this.block(),this.options.doFade?setTimeout(function(){a.show()},this.options.fadeDuration*this.options.fadeDelay):this.show(),dpQuery(document).off("keydown.dpModal").on("keydown.dpModal",function(a){var b=getCurrent();27==a.which&&b.options.escapeClose&&b.close()}),this.options.clickClose&&this.$blocker.click(function(a){a.target==this&&dpQuery.dpModal.close()})},close:function(){dpModals.pop(),this.unblock(),this.hide(),dpQuery.dpModal.isActive()||dpQuery(document).off("keydown.dpModal")},block:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_BLOCK,[this._ctx()]),this.$body.css("overflow","hidden"),this.$blocker=dpQuery('<div class="jquery-dpModal blocker current"></div>').appendTo(this.$body),selectCurrent(),this.options.doFade&&this.$blocker.css("opacity",0).animate({opacity:1},this.options.fadeDuration),this.$elm.trigger(dpQuery.dpModal.BLOCK,[this._ctx()])},unblock:function(a){!a&&this.options.doFade?this.$blocker.fadeOut(this.options.fadeDuration,this.unblock.bind(this,!0)):(this.$blocker.children().appendTo(this.$body),this.$blocker.remove(),this.$blocker=null,selectCurrent(),dpQuery.dpModal.isActive()||this.$body.css("overflow",""))},show:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_OPEN,[this._ctx()]),this.options.showClose&&(this.closeButton=dpQuery('<a href="#close-dpModal" rel="dpModal:close" class="close-dpModal '+this.options.closeClass+'">'+this.options.closeText+"</a>"),this.$elm.append(this.closeButton)),this.$elm.addClass(this.options.dpModalClass).appendTo(this.$blocker),this.options.doFade?this.$elm.css("opacity",0).show().animate({opacity:1},this.options.fadeDuration):this.$elm.show(),this.$elm.trigger(dpQuery.dpModal.OPEN,[this._ctx()])},hide:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_CLOSE,[this._ctx()]),this.closeButton&&this.closeButton.remove();var a=this;this.options.doFade?this.$elm.fadeOut(this.options.fadeDuration,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}):this.$elm.hide(0,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}),this.$elm.trigger(dpQuery.dpModal.CLOSE,[this._ctx()])},showSpinner:function(){this.options.showSpinner&&(this.spinner=this.spinner||dpQuery('<div class="'+this.options.dpModalClass+'-spinner"></div>').append(this.options.spinnerHtml),this.$body.append(this.spinner),this.spinner.show())},hideSpinner:function(){this.spinner&&this.spinner.remove()},_ctx:function(){return{elm:this.$elm,$blocker:this.$blocker,options:this.options}}},dpQuery.dpModal.close=function(a){if(dpQuery.dpModal.isActive()){a&&a.preventDefault();var b=getCurrent();return b.close(),b.$elm}},dpQuery.dpModal.isActive=function(){return dpModals.length>0},dpQuery.dpModal.defaults={closeExisting:!0,escapeClose:!0,clickClose:!0,closeText:"Close",closeClass:"",dpModalClass:"dp-popup-dpModal",spinnerHtml:null,showSpinner:!0,showClose:!0,fadeDuration:null,fadeDelay:1},dpQuery.dpModal.BEFORE_BLOCK="dpModal:before-block",dpQuery.dpModal.BLOCK="dpModal:block",dpQuery.dpModal.BEFORE_OPEN="dpModal:before-open",dpQuery.dpModal.OPEN="dpModal:open",dpQuery.dpModal.BEFORE_CLOSE="dpModal:before-close",dpQuery.dpModal.CLOSE="dpModal:close",dpQuery.dpModal.AFTER_CLOSE="dpModal:after-close",dpQuery.dpModal.AJAX_SEND="dpModal:ajax:send",dpQuery.dpModal.AJAX_SUCCESS="dpModal:ajax:success",dpQuery.dpModal.AJAX_FAIL="dpModal:ajax:fail",dpQuery.dpModal.AJAX_COMPLETE="dpModal:ajax:complete",dpQuery.fn.dpModal=function(a){return 1===this.length&&new dpQuery.dpModal(this,a),this},dpQuery(document).on("click.dpModal",'a[rel="dpModal:close"]',dpQuery.dpModal.close),dpQuery(document).on("click.dpModal",'a[rel="dpModal:open"]',function(a){a.preventDefault(),dpQuery(this).dpModal()});
 
   function reloadCurrency() {
     if (typeof Currency == "object" && typeof Currency.moneyFormats == "object" && typeof mlvedaload == "function") {
@@ -1537,11 +1633,13 @@ reqJquery(function($){
     var products = [];
     var offerId = ba_data.discounts.upsell_arr[0].offer_id;
     var upsellNote = ba_data.discounts.upsell_arr[0].upsell_note;
+    var discount_applies = ba_data.discounts.upsell_arr[0].discount_applies;
     ba_data.discounts.upsell_arr.map(function(p){
     arr.push($.getJSON("/products/" + p.handle + ".json", function(data) {
       var prod = data.product;
       prod.offer_id = offerId;
       prod.upsell_note = upsellNote;
+      prod.discount_applies = discount_applies;
       prod.variantsStyle = "";
       prod.variantsSelect = "";
       for (var i = 0; i < prod.variants.length; i++) {
@@ -1615,6 +1713,7 @@ reqJquery(function($){
       for (var i = 0; i < products.length; i++) {
         var offerId = products[i].offer_id;
         var upsellNote = products[i].upsell_note;
+        var discount_applies = products[i].discount_applies;
         if (products[i].variants.length > 1) {
           noVariants = false
         }
@@ -1635,6 +1734,9 @@ reqJquery(function($){
         }
       }
     switch (products.length) {
+      case 1:
+         var cssLength = 'one'
+        break;
       case 2:
         var cssLength = 'two'
         break;
@@ -1650,8 +1752,12 @@ reqJquery(function($){
 
 
     var source = $("#ba-upsell").html();
+    var multiple_products = products.length > 1;
     var context = {
+      multiple_products: multiple_products,
+      discount_applies: discount_applies,
       upsell_note: upsellNote,
+      discount_applies: discount_applies,
       products: products,
       css_length: cssLength,
       ba_plus_url: "{{ 'ba-plus.png' | asset_img_url: '38x' }}",
@@ -1802,7 +1908,7 @@ reqJquery(function($){
     var btn = $(target);
     var boosterUpsellItems = [];
 
-    var container = btn.parents(".ba-product-wrapper");
+    var container = btn.parents(".product-container");
     var i = {id: container.data("variant-id"),quantity: container.data("quantity")};
     boosterUpsellItems.push(i);
 
@@ -1967,19 +2073,21 @@ reqJquery(function($){
   }
 
 
-  $.ajax({
-    cache: false,
-    type: "POST",
-    
-        url: "/apps/discounted_pricing",
-    
-    data: JSON.stringify(window.booster),
-    dataType: 'json',
-    contentType: "application/json; charset=utf-8",
-    success: function(data) {
-      baDelegate(data)
-    }
-  });
+  if(window.booster.ba_page.length > 0){
+    $.ajax({
+      cache: false,
+      type: "POST",
+      
+          url: "/apps/discounted_pricing",
+      
+      data: JSON.stringify(window.booster),
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8",
+      success: function(data) {
+        baDelegate(data)
+      }
+    });
+  }
 
   setTimeout(function(){
     if (typeof ga == "function"){ga(function(tracker) {window.gaclientId = tracker.get("clientId")})}
@@ -2010,6 +2118,20 @@ reqJquery(function($){
       reloadCurrency();
       return false;
     });
+
+  $(document).on('change', '#dpModal-container select.ba-variants', function(){
+      var option = $(this).find(":selected");
+      var price  = baDisplayCents(option.data('price'));
+      var cont = option.parents('.product-container');
+      var img  = option.data('img');
+
+      cont.data("variant-id", option.val());    
+      cont.find('span.ba-sale').html(price);
+      cont.find('img').attr('src', img);
+      reloadCurrency();
+      return false;
+    });
+
   
   $(document).on('click', ".add-booster-bundle", function(e) {
     e.preventDefault();
@@ -2044,12 +2166,8 @@ reqJquery(function($){
     $('#booster-notification-bar').slideUp('slow');
   });
 
-  $(function(){
-    var dpQuery=$,dpModals=[],getCurrent=function(){return dpModals.length?dpModals[dpModals.length-1]:null},selectCurrent=function(){var a,b=!1;for(a=dpModals.length-1;a>=0;a--)dpModals[a].$blocker&&(dpModals[a].$blocker.toggleClass("current",!b).toggleClass("behind",b),b=!0)};dpQuery.dpModal=function(a,b){var c,d;if(this.$body=dpQuery("body"),this.options=dpQuery.extend({},dpQuery.dpModal.defaults,b),this.options.doFade=!isNaN(parseInt(this.options.fadeDuration,10)),this.$blocker=null,this.options.closeExisting)for(;dpQuery.dpModal.isActive();)dpQuery.dpModal.close();if(dpModals.push(this),a.is("a"))if(d=a.attr("href"),/^#/.test(d)){if(this.$elm=dpQuery(d),1!==this.$elm.length)return null;this.$body.append(this.$elm),this.open()}else this.$elm=dpQuery("<div>"),this.$body.append(this.$elm),c=function(a,b){b.elm.remove()},this.showSpinner(),a.trigger(dpQuery.dpModal.AJAX_SEND),dpQuery.get(d).done(function(b){if(dpQuery.dpModal.isActive()){a.trigger(dpQuery.dpModal.AJAX_SUCCESS);var d=getCurrent();d.$elm.empty().append(b).on(dpQuery.dpModal.CLOSE,c),d.hideSpinner(),d.open(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)}}).fail(function(){a.trigger(dpQuery.dpModal.AJAX_FAIL);var b=getCurrent();b.hideSpinner(),dpModals.pop(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)});else this.$elm=a,this.$body.append(this.$elm),this.open()},dpQuery.dpModal.prototype={constructor:dpQuery.dpModal,open:function(){var a=this;this.block(),this.options.doFade?setTimeout(function(){a.show()},this.options.fadeDuration*this.options.fadeDelay):this.show(),dpQuery(document).off("keydown.dpModal").on("keydown.dpModal",function(a){var b=getCurrent();27==a.which&&b.options.escapeClose&&b.close()}),this.options.clickClose&&this.$blocker.click(function(a){a.target==this&&dpQuery.dpModal.close()})},close:function(){dpModals.pop(),this.unblock(),this.hide(),dpQuery.dpModal.isActive()||dpQuery(document).off("keydown.dpModal")},block:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_BLOCK,[this._ctx()]),this.$body.css("overflow","hidden"),this.$blocker=dpQuery('<div class="jquery-dpModal blocker current"></div>').appendTo(this.$body),selectCurrent(),this.options.doFade&&this.$blocker.css("opacity",0).animate({opacity:1},this.options.fadeDuration),this.$elm.trigger(dpQuery.dpModal.BLOCK,[this._ctx()])},unblock:function(a){!a&&this.options.doFade?this.$blocker.fadeOut(this.options.fadeDuration,this.unblock.bind(this,!0)):(this.$blocker.children().appendTo(this.$body),this.$blocker.remove(),this.$blocker=null,selectCurrent(),dpQuery.dpModal.isActive()||this.$body.css("overflow",""))},show:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_OPEN,[this._ctx()]),this.options.showClose&&(this.closeButton=dpQuery('<a href="#close-dpModal" rel="dpModal:close" class="close-dpModal '+this.options.closeClass+'">'+this.options.closeText+"</a>"),this.$elm.append(this.closeButton)),this.$elm.addClass(this.options.dpModalClass).appendTo(this.$blocker),this.options.doFade?this.$elm.css("opacity",0).show().animate({opacity:1},this.options.fadeDuration):this.$elm.show(),this.$elm.trigger(dpQuery.dpModal.OPEN,[this._ctx()])},hide:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_CLOSE,[this._ctx()]),this.closeButton&&this.closeButton.remove();var a=this;this.options.doFade?this.$elm.fadeOut(this.options.fadeDuration,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}):this.$elm.hide(0,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}),this.$elm.trigger(dpQuery.dpModal.CLOSE,[this._ctx()])},showSpinner:function(){this.options.showSpinner&&(this.spinner=this.spinner||dpQuery('<div class="'+this.options.dpModalClass+'-spinner"></div>').append(this.options.spinnerHtml),this.$body.append(this.spinner),this.spinner.show())},hideSpinner:function(){this.spinner&&this.spinner.remove()},_ctx:function(){return{elm:this.$elm,$blocker:this.$blocker,options:this.options}}},dpQuery.dpModal.close=function(a){if(dpQuery.dpModal.isActive()){a&&a.preventDefault();var b=getCurrent();return b.close(),b.$elm}},dpQuery.dpModal.isActive=function(){return dpModals.length>0},dpQuery.dpModal.defaults={closeExisting:!0,escapeClose:!0,clickClose:!0,closeText:"Close",closeClass:"",dpModalClass:"dp-popup-dpModal",spinnerHtml:null,showSpinner:!0,showClose:!0,fadeDuration:null,fadeDelay:1},dpQuery.dpModal.BEFORE_BLOCK="dpModal:before-block",dpQuery.dpModal.BLOCK="dpModal:block",dpQuery.dpModal.BEFORE_OPEN="dpModal:before-open",dpQuery.dpModal.OPEN="dpModal:open",dpQuery.dpModal.BEFORE_CLOSE="dpModal:before-close",dpQuery.dpModal.CLOSE="dpModal:close",dpQuery.dpModal.AFTER_CLOSE="dpModal:after-close",dpQuery.dpModal.AJAX_SEND="dpModal:ajax:send",dpQuery.dpModal.AJAX_SUCCESS="dpModal:ajax:success",dpQuery.dpModal.AJAX_FAIL="dpModal:ajax:fail",dpQuery.dpModal.AJAX_COMPLETE="dpModal:ajax:complete",dpQuery.fn.dpModal=function(a){return 1===this.length&&new dpQuery.dpModal(this,a),this},dpQuery(document).on("click.dpModal",'a[rel="dpModal:close"]',dpQuery.dpModal.close),dpQuery(document).on("click.dpModal",'a[rel="dpModal:open"]',function(a){a.preventDefault(),dpQuery(this).dpModal()});
-
-  });
- 
   
 })
 }(window, document));
 </script>
+
