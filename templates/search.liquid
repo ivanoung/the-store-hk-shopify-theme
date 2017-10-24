@@ -1,93 +1,74 @@
-{% assign product_only_search = true %}
-{% assign grid_results = true %}
+{% paginate search.results by 10 %}
 
-
-<div id="content">
-  <div class="container search-page">
-    {% include 'breadcrumb' %}
-
-    {% if search.performed %}
-    {% paginate search.results by 15 %}
-
-    {% if search.results_count == 0 %}
-    <div class="title clearfix">
-      <h1>{{ 'general.search.search_heading' | t }}</h1>
-    </div>
-    <div class="page_content">
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          <div class="sfbox box-search animated rollIn" data-animation="rollIn">
-            <div class="rte">
-              <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
-              <h2>{{ 'general.search.search_again' | t }}</h2>
-              <form action="/search" method="get" role="search">
-
-                <input type="hidden" name="type" value="product">
-                <div class="frm">
-                  <div class="col-sm-9"><input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.submit' | t }}" class="txtbox" aria-label="{{ 'general.search.submit' | t }}"></div>
-                  <div class="col-sm-3"><button class="btn_c" type="submit" value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button></div>
-                </div>
-              </form> 
-            </div>
+<div class="page-width">
+  {% if search.results_count == 0 or search.performed == false %}
+    <div class="empty-page-content text-center">
+      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+  {% else %}
+    <div class="section-header text-center">
+      <h1 class="h2">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</h1>
+  {% endif %}
+        <div class="grid">
+          <div class="grid__item medium-up--two-fifths medium-up--push-three-tenths">
+            <form action="/search" method="get" role="search" class="search">
+              <div class="input-group">
+                <input type="search"
+                  id="SearchInput"
+                  class="input-group__field search__input"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'general.search.placeholder' | t }}"
+                  aria-label="{{ 'general.search.placeholder' | t }}"
+                  autofocus>
+                <span class="input-group__btn">
+                  <button class="btn search__submit" type="submit">{{ 'general.search.submit' | t }}</button>
+                </span>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
-    </div>
-    {% else %}
-    <div class="product_c">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title clearfix">
-            <h1>{{ 'general.search.search_heading' | t }}</h1>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        {% if grid_results == false %}
-        <div class="search-list mt20">
-          {% for item in search.results %}
-          {% include 'search-result' %}
-          {% endfor %}
-        </div>
-        {% else %}
-        {% for item in search.results %}
-        {% include 'search-result-grid' %}
-        {% endfor %}
+
+        {% if search.performed and search.results_count == 0 %}
+          <hr class="hr--small hr--invisible">
+          <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
         {% endif %}
-      </div>
-      {% endif %}
-
-      {% if paginate.pages > 1 %}
-      {% include 'pagination-custom' %}
-      {% endif %}
-
-      {% endpaginate %}
-
-
-      {% else %}
-
-      <div class="title clearfix">
-        <h1>{{ 'general.search.placeholder' | t }}</h1>
-      </div>
-      <div class="page_content">
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2">
-            <div class="sfbox box-search animated rollIn" data-animation="rollIn">
-                <form action="/search" method="get" role="search">
-                  {% if product_only_search == true %}
-                  <input type="hidden" name="type" value="product">
-                  {% endif %}
-                  <div class="frm">
-                    <div class="col-sm-9"><input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.submit' | t }}" class="txtbox" aria-label="{{ 'general.search.submit' | t }}"></div>
-                    <div class="col-sm-3"><button class="btn_c" type="submit" value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button></div>
-                  </div>
-                </form> 
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {% endif %}    
-    </div>
   </div>
 </div>
+
+
+{% if search.performed %}
+  {% if search.results_count > 0 %}
+    <hr>
+  {% endif %}
+  <div class="page-width list-view-items">
+    {% for item in search.results %}
+      <a href="{{ item.url }}" class="list-view-item">
+        {% if item.object_type == 'product' %}
+          {% include 'product-card-list', product: item %}
+        {% else %}
+          {% if item.image %}
+            <div class="list-view-item__image-column">
+              <div class="list-view-item__image-wrapper">
+                <img class="list-view-item__image" src="{{ item.image.src | img_url: '600x600' }}" alt="{{ item.image.alt | escape }}">
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="list-view-item__title-column">
+            <div class="list-view-item__title">{{ item.title }}</div>
+            <div class="">
+              {% if item.published_at %}{{ item.published_at | date: "%b %d, %Y" }} &#8212; {% endif %}
+              {{ item.content | strip_html | truncate: 200 }}
+            </div>
+          </div>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+{% endif %}
+
+{% endpaginate %}

@@ -1,10 +1,8 @@
-<div class="user_img"><img src="{{ 'gravatar-user-default.png' | asset_url }}" alt="{{ comment.author }}" /></div>
-<div class="com_desc">
-  <div class="clearfix">
-    <h5>{{ comment.author }}</h5>
-    <div class="datetxt">
-      <span class="fa fa-calendar"></span><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: '%b %d, %Y' }}</time>
-    </div>
-  </div>
-  {{ comment.content }}   
+<!-- /snippets/comment.liquid -->
+<div class="comment__content rte">
+  {{ comment.content }}
+</div>
+<div class="comment__meta">
+  <span class="comment__meta-item">{{ comment.author }}</span>
+  <span class="comment__meta-item">{{ comment.created_at | time_tag: format: 'month_day_year' }}</span>
 </div>

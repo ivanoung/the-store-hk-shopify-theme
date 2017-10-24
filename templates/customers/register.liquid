@@ -1,43 +1,31 @@
-<div id="content">
-  <div class="container">
-    {% include 'breadcrumb' %}
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="title clearfix">
-          <h1>{{ 'customer.register.title' | t }}</h1>
-        </div>
-      </div>
-    </div>
-    <div class="row mt20">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="sfbox box-registration">
-          {% form 'create_customer' %}
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--one-half medium-up--push-one-quarter">
 
-          {% include 'form-errors-custom' %}
+      <div class="form-vertical">
+        {% form 'create_customer' %}
 
-          <div class="frm">
-            <label for="first_name" class="lbltxt">{{ 'customer.register.first_name' | t }}</label>
-            <input type="text" value="" name="customer[first_name]" id="first_name" class="txtbox" {% if form.errors contains "first_name" %} class="error"{% endif %} autocapitalize="words" autofocus>
-          </div>
-          <div class="frm">
-            <label for="last_name" class="lbltxt">{{ 'customer.register.last_name' | t }}</label>
-            <input type="text" value="" name="customer[last_name]" id="last_name" class="txtbox" {% if form.errors contains "last_name" %} class="error"{% endif %} autocapitalize="words">
-          </div>  
-          <div class="frm">
-            <label for="email" class="lbltxt">{{ 'customer.register.email' | t }}</label>
-            <input type="email" value="" name="customer[email]" id="email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %}>
-          </div>
-          <div class="frm">
-            <label for="password" class="lbltxt">{{ 'customer.register.password' | t }}</label>
-            <input type="password" value="" name="customer[password]" id="create_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %}>
-          </div>
+          <h1 class="text-center">{{ 'customer.register.title' | t }}</h1>
 
-          <div class="row">
-            <div class="col-sm-4 col-ms-6"><p><input type="submit" class="btn_c" value="{{ 'customer.register.submit' | t }}"></p></div>
-            <div class="col-sm-8 col-ms-6 text-right sign-in">{{ 'customer.register.returning' | t }} <a href="/account/login">{{ 'customer.register.sign_in_html' | t }}</a></div>
-          </div>
-          {% endform %}
-        </div>
+          {{ form.errors | default_errors }}
+
+          <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" name="customer[first_name]" id="FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autofocus>
+
+          <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" name="customer[last_name]" id="LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+
+          <label for="Email">{{ 'customer.register.email' | t }}</label>
+          <input type="email" name="customer[email]" id="Email" class="{% if form.errors contains 'email' %} input--error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+
+          <label for="CreatePassword">{{ 'customer.register.password' | t }}</label>
+          <input type="password" name="customer[password]" id="CreatePassword" class="{% if form.errors contains 'password' %} input--error{% endif %}">
+
+          <p class="text-center">
+            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn">
+          </p>
+
+        {% endform %}
       </div>
     </div>
   </div>

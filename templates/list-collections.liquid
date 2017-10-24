@@ -1,34 +1,14 @@
-{% if settings.product_grid_layout == '4-col' %}
-{% assign grid_item_width = '3' %}
-{% elsif settings.product_grid_layout == '3-col' %}
-{% assign grid_item_width = '4' %}
-{% else %}
-{% assign grid_item_width = '6' %}
-{% endif %}
+<div class="page-width">
+  <header class="section-header text-center">
+    <h1>{{ page_title }}</h1>
+  </header>
 
-<div id="content">
-  <div class="container">
-    {% include 'breadcrumb' %}
-    <div class="catalog_c">
-      <div class="title clearfix">
-        <h1>{{ 'collections.general.title' | t }}</h1>
+  <div class="grid grid--uniform">
+    {% for collection in collections %}
+      <div class="grid__item small--one-half medium-up--one-third">
+        {% include 'collection-grid-item' %}
       </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="product_c">
-            <div class="row view-grid animated  fadeInUp" data-animation="fadeInUp" >
-              {% for collection in collections %}
-              {% unless collection.handle == 'frontpage' %}
-              <div class="col-lg-{{ grid_item_width }} col-md-6 col-sm-6 element mb30">
-                {% include 'collection-loop' %}
-              </div>
-              {% endunless %}
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
+
