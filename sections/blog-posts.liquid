@@ -129,12 +129,7 @@
                 <div class="hide-in-mobile">
                   <ul>
                     <li><span class="fa fa-calendar"></span><span><time datetime="">{{ published_at }}</time></span></li>
-                    <li><span class="fa fa-user">&nbsp;</span>
-						{% comment %}
-							{{ article.author }}
-						{% endcomment %}
-                      		&nbsp;
-					</li>
+                    <li><span class="fa fa-user">&nbsp;</span>{{ article.author }}</li>
                   </ul>
                 </div>
               </div>
@@ -163,7 +158,7 @@
       "default": "From the Blog"
       },	
 	  {
-        "type": "blog",
+        "type": "text",
         "id": "recent-post-blog",
         "label": "Choose blog"
       },

@@ -1,0 +1,80 @@
+{% if settings.brandslider_enable %}
+
+<div class="container brands_custom">
+  {%if false %}
+  {% if settings.brandslider_heading != ""  %}
+  <h3 class="mb30">{{  settings.brandslider_heading }}</h3>
+  {% endif %}
+  {% endif %}
+  {% if false %}
+  <ul class="slider demo responsive slider-no-padding-margin">
+  {% for link in linklistss[section.settings.logos_linklist].links %}   
+    {% if link.type == 'collection_link' and link.object.products_count != 0 %}
+    <li>
+      <a href="{{ link.url }}">     
+        {% if link.object.image %}
+        <img src="{{ link.object | img_url: 'compact' | replace: 'small', 'compact' }}" alt="{{ link.title | escape }}">
+        {% else %}
+        {% assign product = link.object.products.first %}
+        <img src="{{ product | img_url: 'compact' | replace: 'small', 'compact' }}" alt="{{ link.title | escape }}">
+        {% endif %}
+        
+        {% if settings.brandproduct_title_enable %}
+        <h5>{{ link.title }}</h5>
+        {% endif %}
+        </a>
+      </li>
+     {% endif %}
+    
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  <ul class="owl owl-carousel owl-theme">
+        {% for link in linklists[section.settings.logos_linklist].links %}   
+		  {% if link.type == 'collection_link' and link.object.products_count != 0 %}
+          <div class="owl-item">
+                <a href="{{ link.url }}">
+                  {% if link.object.image %}
+                    <img src="{{ link.object | img_url: 'master' | replace: 'small', 'compact' }}" alt="{{ link.title | escape }}" />
+                  {% else %}
+                    {% assign product = link.object.products.first %}
+                    <img src="{{ product | img_url: 'master' | replace: 'small', 'compact' }}" alt="{{ link.title | escape }}" />
+                  {% endif %}
+                  {% if settings.brandproduct_title_enable %}
+                    <h5>{{ link.title }}</h5>
+                  {% endif %}
+                </a>
+              </div>
+          {% endif %}
+        {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+
+
+{% schema %}
+  {
+    "name": "Logos",
+    "settings": [
+          {
+          "type": "link_list",
+          "id": "logos_linklist",
+          "label": "Choose menu"	
+       }
+	],
+	"presets": [
+    {
+      "name": "Logos",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
