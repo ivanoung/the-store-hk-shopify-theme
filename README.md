@@ -1,5 +1,5 @@
 # the-store-hk-shopify
 The Store HK Shopify Theme repository
 
-## Old retired version, but key elements reserved
+## Important version **done by Shopify Team**
 * Blog session

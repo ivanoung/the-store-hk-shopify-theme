@@ -206,7 +206,7 @@ jQuery(document).ready(function() {
   
   Shopify.addImageSize = function(src,size){
     if(typeof size === 'undefined'){ return src; }
-    if(src === null){ return "\/\/cdn.shopify.com\/s\/files\/1\/1771\/9349\/t\/15\/assets\/no-image.gif?11938506525443797414" }
+    if(src === null){ return "\/\/cdn.shopify.com\/s\/files\/1\/1771\/9349\/t\/21\/assets\/no-image.gif?18155668210707504517" }
     size = '_' + size + '.';
     return src.replace(/.([^.]*)$/,size+'$1');
   };

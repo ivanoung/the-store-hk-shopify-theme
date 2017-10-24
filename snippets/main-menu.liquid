@@ -226,9 +226,11 @@
         </div>
       </li>
       {% endif %}
+      	{% comment %}
         {% if settings.show_multiple_currencies %}
         {% include 'currencies-switcher' %}
         {% endif %}
+      	{% endcomment %}
     </ul>
   </nav>
 </div>

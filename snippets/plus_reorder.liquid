@@ -1,0 +1,76 @@
+{% case section %}
+  {% when 'buttons' %}
+  
+    {% assign items = ''%}
+    {% for line_item in order.line_items %}
+      {% assign item_id = line_item.variant_id %}
+      {% assign item_quantity = line_item.quantity %}
+      {% if forloop.last %}
+        {% assign item = item_id | append: ':' | append: item_quantity %}
+      {% else %}
+        {% assign item = item_id | append: ':' | append: item_quantity | append: ',' %}
+      {% endif %}
+      {% assign items = items | append: item %}
+    {% endfor %}
+  
+    {% if showReorder %}
+      <button type="button" class="modal-button plus_reorder_btn" data-order-note="{{ order.note }}" data-items="{{ items }}">{{ 'plus.reorder_button.button_text' | t }}</button><br>
+    {% endif %}
+    {% if showExpress %}
+      <button type="button" class="modal-button plus_express_checkout_btn" data-order-note="{{ order.note }}" data-items="{{ items }}">{{ 'plus.express_checkout_button.button_text' | t }}</button>
+      {% if showNote %}
+      <p class="note">{{ 'plus.express_checkout_button.message' | t }}</p>
+      {% endif %}
+    {% endif %}
+  
+  {% when 'script' %}
+    <script>
+    $(function() {
+      // look at adding cart notes in update as well
+      function plusReorderCart($button, gotoCheckout) {
+        var items = $button.data('items');
+        var note = $button.data('order-note');
+        var postData = {
+          updates: {},
+          note: note
+        }
+        var itemsArray = items.split(',');
+
+        itemsArray.map(function (item) {
+          data = item.split(':');
+          postData.updates[data[0]] = data[1]; 
+        });
+        
+        $.ajax({
+          type: "POST",
+          url: '/cart/update.js',
+          data: postData,
+          dataType: ' json',
+          success: function(cart) {
+            if (gotoCheckout){
+              location.href = "/checkout"
+            }
+            else {
+              // show the mini cart if cart_type is modal
+              {% if settings.cart_type == 'modal' %}
+              Shopify.updateQuickCart(cart);
+              {% endif %}
+            }
+          }
+        });
+      }
+      
+      // click handlers for buttons
+      $('.plus_reorder_btn').click(function() {
+        // add items to cart, do not change screens
+        plusReorderCart($(this), false);
+      });
+      
+      $('.plus_express_checkout_btn').click(function() {
+        // add items to cart, take user to cart
+        plusReorderCart($(this), true);
+      });
+      
+    })
+    </script>
+{% endcase %}

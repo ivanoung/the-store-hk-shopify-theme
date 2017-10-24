@@ -22,6 +22,11 @@
                 <th>{{ 'customer.orders.payment_status' | t }}</th>
                 <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
                 <th>{{ 'customer.orders.total' | t }}</th>
+                {% if settings.plus_customer_account_reorder_enabled or settings.plus_customer_account_express_checkout_enabled %}
+                <th class="plus_quick_btn">
+                  <p class="note">{{ 'plus.express_checkout_button.message' | t }}</p>
+                </th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -32,6 +37,11 @@
                 <td>{{ order.financial_status_label }}</td>
                 <td>{{ order.fulfillment_status_label }}</td>
                 <td>{{ order.total_price | money }}</td>
+                {% if settings.plus_customer_account_reorder_enabled or settings.plus_customer_account_express_checkout_enabled %}
+                <td class="plus_quick_btn">
+                  {% include 'plus_reorder', section: 'buttons', order: order, showReorder: settings.plus_customer_account_reorder_enabled, showExpress: settings.plus_customer_account_express_checkout_enabled, showNote: false %}
+                </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
@@ -85,3 +95,6 @@
     </div>
   </div>
 </section>
+{% if settings.plus_customer_account_reorder_enabled or settings.plus_customer_account_express_checkout_enabled %}
+{% include 'plus_reorder', section: 'script' %}
+{% endif %}

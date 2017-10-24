@@ -85,6 +85,14 @@
                 <td colspan="3"><strong>{{ 'customer.order.details.total' | t }}</strong></td>
                 <td class="text-right"><strong>{{ order.total_price | money }} {{ order.currency }}</strong></td>
               </tr>
+              
+              {% if settings.plus_customer_order_reorder_enabled or settings.plus_customer_order_express_checkout_enabled %}
+              <tr>
+                <td colspan="4" class="plus_quick_btn">
+                  {% include 'plus_reorder', section: 'buttons', order: order, showReorder: settings.plus_customer_order_reorder_enabled, showExpress: settings.plus_customer_order_express_checkout_enabled, showNote: true %}
+                </td>
+              </tr>
+              {% endif %}
             </tfoot>
           </table>
         </div>
@@ -133,3 +141,6 @@
     </div>
   </div>
 </div>
+{% if settings.plus_customer_order_reorder_enabled or settings.plus_customer_order_express_checkout_enabled %}
+{% include 'plus_reorder', section: 'script' %}
+{% endif %}

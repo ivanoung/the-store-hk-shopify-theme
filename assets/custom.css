@@ -78,6 +78,7 @@
     font-weight: normal;
     color: #545454;
     font-family: 'Poppins', sans-serif;
+/*   padding: 10px; */
 }
 .collection-hldr{
     /* margin-top: 55px; */
@@ -96,13 +97,9 @@
  font-size: 12px !important;
  text-transform : capitalize;
 }
-.blogs-full-width {
-  margin-top: 20px;
-    margin-bottom: 10px;
-}
+
 #content .blog_blk {
  height: auto !important;
-  margin-bottom:55px;
 }
 
 #header #nav .navbar h5 {
@@ -200,7 +197,7 @@
 /** Jeferd Kyle 5-2-2017 **/
 
 .smh-blog{
-  margin-bottom:10px;
+  margin-bottom: -25px;
   margin-top: 10px;
 }
 
@@ -223,7 +220,7 @@
 }
 
 .smh-blog article figure{
-  width: 110px;
+  width: 130px;
   float: right;
   margin-left: 15px;
   margin-bottom: 15px;
@@ -251,8 +248,8 @@
 
 .smh-blog article .story_wof ul li{
     display: inline-block;
-    margin-right: 0px;
-    font-size: 11px;
+    margin-right: 15px;
+    font-size: 13px;
     line-height: 21px;
     color: #898989
 }
@@ -261,13 +258,13 @@
 	font-size: 14px;
     line-height: 30px;
     color: #d7dbdb;
-    margin-right: 7px;
-
+    /*margin-right: 7px;*/
+	width: 0px;
 }
 
-/* .smh-blog article .story_wof ul li:first-child {
+.smh-blog article .story_wof ul li:first-child {
 	display: none;
-} */
+}
 
 .smh-blog .story_wof .blog_blk {
 	margin: 0 0 0px 0 !important;
@@ -324,10 +321,10 @@
   	height: auto !important;
   }
   .header_bot .navbar .navbar-header #currencies {
-    display: none;
+    display: block;
   }
   .smh-blog .hide-in-mobile {
-    display: none;
+    display: block;
   }
   
   #header .navbar-brand img {
@@ -770,8 +767,8 @@
   box-shadow: none;
 }
 .smh-blog .row .blogs-full-width {
-  padding-left: 5px !important;
-  padding-right: 5px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 .smh-blog .row.blog-row-nomarginpadding{
   margin-right: 0px !important;
@@ -798,7 +795,7 @@
   position: absolute;
   right: -25px;
   bottom: 45%;
-  background: url( //cdn.shopify.com/s/files/1/1771/9349/t/15/assets/back-normal.png?4490263701045051115);
+  background: url( //cdn.shopify.com/s/files/1/1771/9349/t/21/assets/back-normal.png?3692394306771856392);
   z-index: 9;
   background-size: cover;
 }
@@ -1009,8 +1006,9 @@ ul.owl {
     margin-top: 3.9px !important;
   }
   .header_bot .header_content .navbar-right #currencies {
-    /*margin-top: 14px !important;*/
-    margin-top: 15px !important;
+    margin-top: 14px !important;
+    
+/*     margin-top: 22px !important; */
   }
   #footer .f_mid {
    	padding-bottom: 80px;
@@ -1059,9 +1057,9 @@ ul.owl {
 }
 
 /** hide blog **/
-/* .smh-blog {
+.smh-blog {
 	display: none;
-} */
+}
 
 .collection-list .product-details .price .compare-price.money {
 	padding-left: 10px
@@ -1072,21 +1070,7 @@ ul.owl {
 	text-align: left;
 }
 
-
 #header .search_menu .search_box .txtbox{border-radius:0px;}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @media (min-width: 1200px){
@@ -1178,20 +1162,9 @@ li.after_login_message {
   }
 }
 
-
-/* span:first-child */
-/* .twin span:first-child {
+.twin span:first-child {
 	font-size: 12px;
-  color: #898989;  */
-
 }
-
-.brandblack {
-  color:#000000 !important;
-}  
-
-
-
 
 .parent_search_bar .search_bar_div {
 	border: 1px solid #ffffff !important;
@@ -1215,6 +1188,7 @@ li.after_login_message {
   .header_bot .header_content .navbar-right #currencies {
     margin: 10px 10px;
     height: 34px;
+/*     height: 40px; */
     width: 93%;
   }
   #header .menu_c.curr_menu {

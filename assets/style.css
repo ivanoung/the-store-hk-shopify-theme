@@ -344,7 +344,7 @@ figure.effect-chico img {
   color:#9ac625;
   font-weight:400;
   text-transform:uppercase;
-  font-size :14px;
+  font-size :16px;
 }
 .wsmenu > ul > li:hover > a, .mega_menu .megamenu li > a:hover, .mega_menu .wsmenu-submenu li > a:hover {
   color:#7f9e2a;
@@ -7781,3 +7781,27 @@ top: 0 !important;
     transition: all 0.5s ease-in-out;
 
 }
+/* Added by Jen G at Shopify on Sep 11 2017 */
+.plus_quick_btn {
+  text-align: right;
+}
+.plus_quick_btn button {
+  height: auto;
+  line-height: 20px;
+  margin: 0;
+  padding: 3px 20px;
+}
+.plus_quick_btn button ~ button,
+.plus_quick_btn button ~ .note {
+  margin-top: 8px;
+}
+.plus_quick_btn .note {
+  font-size: 12px;
+  font-style: italic;
+  margin-right: 3px;
+  font-weight: normal;
+}
+.plus_quick_btn > .note {
+  padding-left:75px;
+}
+

@@ -35,7 +35,7 @@
     
     <h5 class="title__display-on-desktop-only">
       <a href="{{ product.url | within: collection }}">
-        {{ product.title | strip_html | truncatewords: 10 }}
+        {{ product.title | truncate: 50 }}
         
         {% comment %}
         {% for product_split in truncateBy %}
