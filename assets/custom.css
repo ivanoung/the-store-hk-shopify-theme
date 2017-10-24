@@ -781,7 +781,7 @@
 
 .brands_custom{
 /*   margin-top: 40px; */
-  margin-bottom: 10px;
+  margin-bottom: -10px;
 }
 
 .brands_custom .owl .item img {
@@ -832,7 +832,7 @@
   position: absolute;
   right: -25px;
   bottom: 45%;
-  background: url( //cdn.shopify.com/s/files/1/1771/9349/t/20/assets/back-normal.png?15225433147764509113);
+  background: url( //cdn.shopify.com/s/files/1/1771/9349/t/24/assets/back-normal.png?12045390653137319527);
   z-index: 9;
   background-size: cover;
 }
