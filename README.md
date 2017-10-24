@@ -2,4 +2,4 @@
 The Store HK Shopify Theme repository
 
 ## Important version **done by Shopify Team**
-* Blog session
+* Reordering Buttons
