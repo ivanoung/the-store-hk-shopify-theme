@@ -1,7 +1,7 @@
 {% assign product_only_search = true %}
 {% assign grid_results = true %}
 
-<form action="/search" method="get" role="search">
+<form id="top_search" action="/search" method="get" role="search">
   <div class="menu_c search_menu">
     <div class="search_box">
       {% if product_only_search == true %}
@@ -12,3 +12,11 @@
     </div>
   </div>
 </form>
+
+<script>
+$('#top_search').on('submit', function() {
+  $term = $(this).find('input[name="q"]').val();
+  $q = 'title:' + $term;
+  $(this).find('input[name="q"]').val($q);
+});
+</script>
