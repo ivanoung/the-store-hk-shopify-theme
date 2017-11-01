@@ -3,91 +3,103 @@
 
 
 <div id="content">
-  <div class="container search-page">
-    {% include 'breadcrumb' %}
+    <div class="container search-page">
+        {% include 'breadcrumb' %}
 
-    {% if search.performed %}
-    {% paginate search.results by 15 %}
+        {% if search.performed %}
 
-    {% if search.results_count == 0 %}
-    <div class="title clearfix">
-      <h1>{{ 'general.search.search_heading' | t }}</h1>
-    </div>
-    <div class="page_content">
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          <div class="sfbox box-search animated rollIn" data-animation="rollIn">
-            <div class="rte">
-              <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
-              <h2>{{ 'general.search.search_again' | t }}</h2>
-              <form action="/search" method="get" role="search">
+            {% paginate search.results by 15 %}
 
-                <input type="hidden" name="type" value="product">
-                <div class="frm">
-                  <div class="col-sm-9"><input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.submit' | t }}" class="txtbox" aria-label="{{ 'general.search.submit' | t }}"></div>
-                  <div class="col-sm-3"><button class="btn_c" type="submit" value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button></div>
+            {% if search.results_count == 0 %}
+                <div class="title clearfix">
+                    <h1>{{ 'general.search.search_heading' | t }}</h1>
                 </div>
-              </form> 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% else %}
-    <div class="product_c">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="title clearfix">
-            <h1>{{ 'general.search.search_heading' | t }}</h1>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        {% if grid_results == false %}
-        <div class="search-list mt20">
-          {% for item in search.results %}
-          {% include 'search-result' %}
-          {% endfor %}
-        </div>
+                <div class="page_content">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="sfbox box-search animated rollIn" data-animation="rollIn">
+                                <div class="rte">
+                                    <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+                                    <h2>{{ 'general.search.search_again' | t }}</h2>
+                                    <form action="/search" method="get" role="search">
+
+                                        <input type="hidden" name="type" value="product">
+                                        <div class="frm">
+                                            <div class="col-sm-9">
+                                                <input type="search" name="q" value="{{ search.terms | escape }}"
+                                                       placeholder="{{ 'general.search.submit' | t }}"
+                                                       class="txtbox" aria-label="{{ 'general.search.submit' | t }}">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button class="btn_c" type="submit"
+                                                        value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="product_c">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="title clearfix">
+                                <h1>{{ 'general.search.search_heading' | t }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if grid_results == false %}
+                            <div class="search-list mt20">
+                                {% for item in search.results %}
+                                    {% include 'search-result' %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {% for item in search.results %}
+                                {% include 'search-result-grid' %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    {% if paginate.pages > 1 %}
+                        {% include 'pagination-custom' %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% endpaginate %}
+
         {% else %}
-        {% for item in search.results %}
-        {% include 'search-result-grid' %}
-        {% endfor %}
-        {% endif %}
-      </div>
-      {% endif %}
-
-      {% if paginate.pages > 1 %}
-      {% include 'pagination-custom' %}
-      {% endif %}
-
-      {% endpaginate %}
-
-
-      {% else %}
-
-      <div class="title clearfix">
-        <h1>{{ 'general.search.placeholder' | t }}</h1>
-      </div>
-      <div class="page_content">
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2">
-            <div class="sfbox box-search animated rollIn" data-animation="rollIn">
-                <form action="/search" method="get" role="search">
-                  {% if product_only_search == true %}
-                  <input type="hidden" name="type" value="product">
-                  {% endif %}
-                  <div class="frm">
-                    <div class="col-sm-9"><input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.submit' | t }}" class="txtbox" aria-label="{{ 'general.search.submit' | t }}"></div>
-                    <div class="col-sm-3"><button class="btn_c" type="submit" value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button></div>
-                  </div>
-                </form> 
+            <div class="title clearfix">
+                <h1>{{ 'general.search.placeholder' | t }}</h1>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {% endif %}    
+            <div class="page_content">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="sfbox box-search animated rollIn" data-animation="rollIn">
+                            <form action="/search" method="get" role="search">
+                                {% if product_only_search == true %}
+                                    <input type="hidden" name="type" value="product">
+                                {% endif %}
+                                <div class="frm">
+                                    <div class="col-sm-9">
+                                        <input type="search" name="q" value="{{ search.terms | escape }}"
+                                               placeholder="{{ 'general.search.submit' | t }}" class="txtbox"
+                                               aria-label="{{ 'general.search.submit' | t }}">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button class="btn_c" type="submit"
+                                                value="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-  </div>
 </div>
