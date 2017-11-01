@@ -24,8 +24,6 @@
         <li>
           <h5><a href="{{ item.product.url | within: collections.all }}" class="item-name">{{ item.product.title }}
 
-
-
 <span class='booster-cart-item-success-notes' data-key='{{item.key}}'></span><span class='booster-cart-item-upsell-notes' data-key='{{item.key}}'></span></a></h5>
           {% unless item.variant.title contains 'Default' %}
           <p>{{ item.variant.title }}</p>

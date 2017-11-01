@@ -6,3 +6,9 @@ The Store HK Shopify Theme repository
 * Homepage layout
 * Mobile layout
 * Customer UX/UI
+
+
+## Require to merge
+* Reordering button
+* Discounting cart
+* Smile.io
