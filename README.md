@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file.
 - Buy one get one free shopping cart Ruby script
 - Discount ribbon for discounted products
 
-
 ## [0.1.0] - 2017-11-02
 ### Added
 - New layout for the Referral landing page
