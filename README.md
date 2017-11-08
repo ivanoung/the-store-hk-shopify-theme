@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 - Re-order button
-- Buy one get one free shopping cart Ruby script
 - Discount ribbon for discounted products
+
+## [0.1.1] - 2017-11-08
+### Added
+- collection.w-header.liquid for collection with promotional header
+- BOGO free Ruby script (Refer to other Git Repo)
+
+
 
 ## [0.1.0] - 2017-11-02
 ### Added
@@ -20,6 +26,3 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Fixed search result, finite search result instead of random string
 ### Removed
-
-
-[Unreleased]:

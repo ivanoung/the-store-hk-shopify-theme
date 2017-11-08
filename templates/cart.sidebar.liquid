@@ -31,6 +31,7 @@
                         <h5><a href="{{ item.url | within: collections.all }}">{{ item.product.title }}
 
 
+
 <span class='booster-cart-item-success-notes' data-key='{{item.key}}'></span><span class='booster-cart-item-upsell-notes' data-key='{{item.key}}'></span></a></h5>
                         {% if item.product.variants.size != 0 %}
                         {% unless item.variant.title contains 'Default' %}
