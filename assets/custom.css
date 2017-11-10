@@ -832,7 +832,9 @@
   position: absolute;
   right: -25px;
   bottom: 45%;
+
   background: url( //cdn.shopify.com/s/files/1/1771/9349/t/29/assets/back-normal.png?2720539370087113974);
+
   z-index: 9;
   background-size: cover;
 }
