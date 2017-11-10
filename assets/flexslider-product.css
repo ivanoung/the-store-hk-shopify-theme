@@ -177,7 +177,7 @@ html[xmlns] #image-block .slides {
 }
 #image-block .flexslider:hover .flex-next:hover, #image-block .flexslider:hover .flex-prev:hover {
   opacity: 1;
-  color:#9ac625;
+  color:#02c3ba;
 }
 #image-block .flex-direction-nav .flex-disabled {
   opacity: 0!important;

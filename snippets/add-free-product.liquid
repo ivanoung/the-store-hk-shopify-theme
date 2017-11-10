@@ -1,0 +1,48 @@
+<script>
+  function clone_of(id)
+  {
+    var cloneof = String(id);
+    if(String(id) == "4583288274982"){cloneof = "4616592293926";}
+    //alert("Clone is " + cloneof);
+    return cloneof;
+  }
+  
+  
+  function add_to_cart_product(id, quantity)
+  {
+     jQuery.post('/cart/add.js',{
+      quantity: quantity,
+      id: clone_of(id)
+     }); 
+  }
+   
+  function is_product_eligible(id)
+  {
+    var eligible = "false";
+    if(String(id) == "4583288274982"){eligible = "true";}
+    return eligible
+  }
+    
+  jQuery('.add_to_cart_btn').click(function(){
+    var id = jQuery(this).find("form").attr('id').substring(9);
+    //alert(id);
+    if(is_product_eligible(id) == "true")
+    {
+      add_to_cart_product(id, 1);
+    }
+  });
+  jQuery('#addToCart').click(function(e){
+    //e.preventDefault();
+    //var id = jQuery(".remove_item_button").data('id');
+    var id = window.ShopifyAnalytics.meta.product.variants[0].id;
+    id = String(id);
+    //alert(id);
+    if(is_product_eligible(id) == "true")
+    {
+      //add_to_cart_product(id, 1);
+      add_to_cart_product(clone_of(id), 1);
+    }
+    //alert(id);
+  });
+  
+</script>

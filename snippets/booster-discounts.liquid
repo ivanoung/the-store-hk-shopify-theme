@@ -520,6 +520,11 @@
             margin-right: auto !important;
             display: block;
         }
+        .with-total.ba-product-bundle .bundle-total button.add-booster-bundle {
+          width: 100%;
+          margin-top:10px;
+        }
+
     }
 
 
@@ -848,25 +853,6 @@
   font-size:12px;
 }
 
-.dp-popup-dpModal .alert {
-  padding: 10px;
-  margin: 20px 0px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-
-.dp-popup-dpModal .alert-success {
-  color: red;
-  background-color: red;
-  border-color: #d6e9c6;
-}
-
-.dp-popup-dpModal .alert-danger {
-  color: red;
-  background-color: red;
-  border-color: #ebccd1;
-}
-
 .dp-popup-dpModal div.no-thanks{
   padding-top:20px;
 }
@@ -1099,6 +1085,8 @@
     width:100%;
   }
 
+
+
   .ba-price .ba-regular{
     width:100%;
   }
@@ -1106,7 +1094,32 @@
   .product-price .ba-sale{
     display:block;
     width:100%;
-    font-weight:normal;
+  }
+
+  .dp-popup-dpModal .product-price{
+    padding-top: 10px;
+    font-weight: bold;
+  }
+
+  .dp-popup-dpModal #one-product .product-price{
+    font-size: 22px;
+  }
+
+  .dp-popup-dpModal .multiple-products-true .product-price{
+    font-size: 16px;
+  }
+
+  .dp-popup-dpModal #one-product .product-price s{
+    vertical-align:middle;
+    font-size: 16px;
+  }
+
+  .dp-popup-dpModal .product-price .ba-sale s{
+    font-weight: normal;
+    color: #000;
+    opacity: 1;
+    padding-left: 5px;
+    font-size: 13px;
   }
 
   .discount-applies-true .ba-price .ba-sale{
@@ -1118,20 +1131,8 @@
     display:block;
     width:100%;
     color:#8C0000;
-    font-weight:normal;
-    opacity:0.8;
   }
 
-
-  .discount-applies-true .product-price .upsell-note{
-    display:block;
-    font-weight:normal;
-    width:100%;
-  }
-
-  .discount-applies-false .product-price .upsell-note{
-    display:none;
-  }
 
   #dpModal-container .product-title{
     font-weight:400;
@@ -1147,6 +1148,7 @@
     margin-top: 10px;
     margin-bottom: 20px;
     font-weight: 500;
+    text-align:center;
   }
 
 
@@ -1355,7 +1357,7 @@ return d?[" && ",f]:[" != null ? ",f," : ",e]})},resolvePossibleLambda:function(
 
 <script id="ba-upsell" type="text/x-handlebars-template">
   <div id='dpModal-container' style='display:none;' class='dp-popup dp-wrap dp-whModal'>
-    <div id="{{css_length}}-product" class="multiple-products-{{multiple_products}} ba-product-bundle">
+    <div id="{{css_length}}-product" class="multiple-products-{{multiple_products}} ba-product-bundle"  data-discount-method="{{discount_method}}" data-discount-value="{{discount_value}}" data-discount-applies="{{discount_applies}}">
       <h3 class="upsell-title">{{upsell_note}}</h3>
       {{#products}}
         <div class="product-container discount-applies-{{discount_applies}}" data-product-id="{{id}}" data-variant-id="{{variants.0.id}}" data-quantity="{{qty_left}}">
@@ -1372,7 +1374,6 @@ return d?[" && ",f]:[" != null ? ",f," : ",e]})},resolvePossibleLambda:function(
             </div>
             <div class="product-price">
               <span class="ba-sale">{{{variants.0.price}}}</span>
-              <span class="upsell-note">{{upsell_note}}</span>
             </div>
           </div>
 
@@ -1445,13 +1446,15 @@ function reqJquery(onload) {
 
 reqJquery(function($){
 
-  var dpQuery=$,dpModals=[],getCurrent=function(){return dpModals.length?dpModals[dpModals.length-1]:null},selectCurrent=function(){var a,b=!1;for(a=dpModals.length-1;a>=0;a--)dpModals[a].$blocker&&(dpModals[a].$blocker.toggleClass("current",!b).toggleClass("behind",b),b=!0)};dpQuery.dpModal=function(a,b){var c,d;if(this.$body=dpQuery("body"),this.options=dpQuery.extend({},dpQuery.dpModal.defaults,b),this.options.doFade=!isNaN(parseInt(this.options.fadeDuration,10)),this.$blocker=null,this.options.closeExisting)for(;dpQuery.dpModal.isActive();)dpQuery.dpModal.close();if(dpModals.push(this),a.is("a"))if(d=a.attr("href"),/^#/.test(d)){if(this.$elm=dpQuery(d),1!==this.$elm.length)return null;this.$body.append(this.$elm),this.open()}else this.$elm=dpQuery("<div>"),this.$body.append(this.$elm),c=function(a,b){b.elm.remove()},this.showSpinner(),a.trigger(dpQuery.dpModal.AJAX_SEND),dpQuery.get(d).done(function(b){if(dpQuery.dpModal.isActive()){a.trigger(dpQuery.dpModal.AJAX_SUCCESS);var d=getCurrent();d.$elm.empty().append(b).on(dpQuery.dpModal.CLOSE,c),d.hideSpinner(),d.open(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)}}).fail(function(){a.trigger(dpQuery.dpModal.AJAX_FAIL);var b=getCurrent();b.hideSpinner(),dpModals.pop(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)});else this.$elm=a,this.$body.append(this.$elm),this.open()},dpQuery.dpModal.prototype={constructor:dpQuery.dpModal,open:function(){var a=this;this.block(),this.options.doFade?setTimeout(function(){a.show()},this.options.fadeDuration*this.options.fadeDelay):this.show(),dpQuery(document).off("keydown.dpModal").on("keydown.dpModal",function(a){var b=getCurrent();27==a.which&&b.options.escapeClose&&b.close()}),this.options.clickClose&&this.$blocker.click(function(a){a.target==this&&dpQuery.dpModal.close()})},close:function(){dpModals.pop(),this.unblock(),this.hide(),dpQuery.dpModal.isActive()||dpQuery(document).off("keydown.dpModal")},block:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_BLOCK,[this._ctx()]),this.$body.css("overflow","hidden"),this.$blocker=dpQuery('<div class="jquery-dpModal blocker current"></div>').appendTo(this.$body),selectCurrent(),this.options.doFade&&this.$blocker.css("opacity",0).animate({opacity:1},this.options.fadeDuration),this.$elm.trigger(dpQuery.dpModal.BLOCK,[this._ctx()])},unblock:function(a){!a&&this.options.doFade?this.$blocker.fadeOut(this.options.fadeDuration,this.unblock.bind(this,!0)):(this.$blocker.children().appendTo(this.$body),this.$blocker.remove(),this.$blocker=null,selectCurrent(),dpQuery.dpModal.isActive()||this.$body.css("overflow",""))},show:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_OPEN,[this._ctx()]),this.options.showClose&&(this.closeButton=dpQuery('<a href="#close-dpModal" rel="dpModal:close" class="close-dpModal '+this.options.closeClass+'">'+this.options.closeText+"</a>"),this.$elm.append(this.closeButton)),this.$elm.addClass(this.options.dpModalClass).appendTo(this.$blocker),this.options.doFade?this.$elm.css("opacity",0).show().animate({opacity:1},this.options.fadeDuration):this.$elm.show(),this.$elm.trigger(dpQuery.dpModal.OPEN,[this._ctx()])},hide:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_CLOSE,[this._ctx()]),this.closeButton&&this.closeButton.remove();var a=this;this.options.doFade?this.$elm.fadeOut(this.options.fadeDuration,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}):this.$elm.hide(0,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}),this.$elm.trigger(dpQuery.dpModal.CLOSE,[this._ctx()])},showSpinner:function(){this.options.showSpinner&&(this.spinner=this.spinner||dpQuery('<div class="'+this.options.dpModalClass+'-spinner"></div>').append(this.options.spinnerHtml),this.$body.append(this.spinner),this.spinner.show())},hideSpinner:function(){this.spinner&&this.spinner.remove()},_ctx:function(){return{elm:this.$elm,$blocker:this.$blocker,options:this.options}}},dpQuery.dpModal.close=function(a){if(dpQuery.dpModal.isActive()){a&&a.preventDefault();var b=getCurrent();return b.close(),b.$elm}},dpQuery.dpModal.isActive=function(){return dpModals.length>0},dpQuery.dpModal.defaults={closeExisting:!0,escapeClose:!0,clickClose:!0,closeText:"Close",closeClass:"",dpModalClass:"dp-popup-dpModal",spinnerHtml:null,showSpinner:!0,showClose:!0,fadeDuration:null,fadeDelay:1},dpQuery.dpModal.BEFORE_BLOCK="dpModal:before-block",dpQuery.dpModal.BLOCK="dpModal:block",dpQuery.dpModal.BEFORE_OPEN="dpModal:before-open",dpQuery.dpModal.OPEN="dpModal:open",dpQuery.dpModal.BEFORE_CLOSE="dpModal:before-close",dpQuery.dpModal.CLOSE="dpModal:close",dpQuery.dpModal.AFTER_CLOSE="dpModal:after-close",dpQuery.dpModal.AJAX_SEND="dpModal:ajax:send",dpQuery.dpModal.AJAX_SUCCESS="dpModal:ajax:success",dpQuery.dpModal.AJAX_FAIL="dpModal:ajax:fail",dpQuery.dpModal.AJAX_COMPLETE="dpModal:ajax:complete",dpQuery.fn.dpModal=function(a){return 1===this.length&&new dpQuery.dpModal(this,a),this},dpQuery(document).on("click.dpModal",'a[rel="dpModal:close"]',dpQuery.dpModal.close),dpQuery(document).on("click.dpModal",'a[rel="dpModal:open"]',function(a){a.preventDefault(),dpQuery(this).dpModal()});
+  var dpQuery=$,dpModals=[],getCurrent=function(){return dpModals.length?dpModals[dpModals.length-1]:null},selectCurrent=function(){var a,b=!1;for(a=dpModals.length-1;a>=0;a--)dpModals[a].$blocker&&(dpModals[a].$blocker.toggleClass("current",!b).toggleClass("behind",b),b=!0)};dpQuery.dpModal=function(a,b){var c,d;if(this.$body=dpQuery("body"),this.options=dpQuery.extend({},dpQuery.dpModal.defaults,b),this.options.doFade=!isNaN(parseInt(this.options.fadeDuration,10)),this.$blocker=null,this.options.closeExisting)for(;dpQuery.dpModal.isActive();)dpQuery.dpModal.close();if(dpModals.push(this),a.is("a"))if(d=a.attr("href"),/^#/.test(d)){if(this.$elm=dpQuery(d),1!==this.$elm.length)return null;this.$body.append(this.$elm),this.open()}else this.$elm=dpQuery("<div>"),this.$body.append(this.$elm),c=function(a,b){b.elm.remove()},this.showSpinner(),a.trigger(dpQuery.dpModal.AJAX_SEND),dpQuery.get(d).done(function(b){if(dpQuery.dpModal.isActive()){a.trigger(dpQuery.dpModal.AJAX_SUCCESS);var d=getCurrent();d.$elm.empty().append(b).on(dpQuery.dpModal.CLOSE,c),d.hideSpinner(),d.open(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)}}).fail(function(){a.trigger(dpQuery.dpModal.AJAX_FAIL);var b=getCurrent();b.hideSpinner(),dpModals.pop(),a.trigger(dpQuery.dpModal.AJAX_COMPLETE)});else this.$elm=a,this.$body.append(this.$elm),this.open()},dpQuery.dpModal.prototype={constructor:dpQuery.dpModal,open:function(){var a=this;this.block(),this.options.doFade?setTimeout(function(){a.show()},this.options.fadeDuration*this.options.fadeDelay):this.show(),dpQuery(document).off("keydown.dpModal").on("keydown.dpModal",function(a){var b=getCurrent();27==a.which&&b.options.escapeClose&&b.close()}),this.options.clickClose&&this.$blocker.click(function(a){a.target==this&&dpQuery.dpModal.close()})},close:function(){dpModals.pop(),this.unblock(),this.hide(),dpQuery.dpModal.isActive()||dpQuery(document).off("keydown.dpModal")},block:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_BLOCK,[this._ctx()]),this.$body.css("overflow","hidden"),this.$blocker=dpQuery('<div class="jquery-dpModal blocker current"></div>').appendTo(this.$body),selectCurrent(),this.options.doFade&&this.$blocker.css("opacity",0).animate({opacity:1},this.options.fadeDuration),this.$elm.trigger(dpQuery.dpModal.BLOCK,[this._ctx()])},unblock:function(a){!a&&this.options.doFade?this.$blocker.fadeOut(this.options.fadeDuration,this.unblock.bind(this,!0)):(this.$blocker.children().appendTo(this.$body),this.$blocker.remove(),this.$blocker=null,selectCurrent(),dpQuery.dpModal.isActive()||this.$body.css("overflow",""))},show:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_OPEN,[this._ctx()]),this.options.showClose&&(this.closeButton=dpQuery('<a href="#close-dpModal" rel="dpModal:close" class="close-dpModal '+this.options.closeClass+'">'+this.options.closeText+"</a>"),this.$elm.append(this.closeButton)),this.$elm.addClass(this.options.dpModalClass).appendTo(this.$blocker),this.options.doFade?this.$elm.css("opacity",0).show().animate({opacity:1},this.options.fadeDuration):this.$elm.show(),this.$elm.trigger(dpQuery.dpModal.OPEN,[this._ctx()])},hide:function(){this.$elm.trigger(dpQuery.dpModal.BEFORE_CLOSE,[this._ctx()]),this.closeButton&&this.closeButton.remove();var a=this;this.options.doFade?this.$elm.fadeOut(this.options.fadeDuration,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}):this.$elm.hide(0,function(){a.$elm.trigger(dpQuery.dpModal.AFTER_CLOSE,[a._ctx()])}),this.$elm.trigger(dpQuery.dpModal.CLOSE,[this._ctx()])},showSpinner:function(){this.options.showSpinner&&(this.spinner=this.spinner||dpQuery('<div class="'+this.options.dpModalClass+'-spinner"></div>').append(this.options.spinnerHtml),this.$body.append(this.spinner),this.spinner.show())},hideSpinner:function(){this.spinner&&this.spinner.remove()},_ctx:function(){return{elm:this.$elm,$blocker:this.$blocker,options:this.options}}},dpQuery.dpModal.close=function(a){if(dpQuery.dpModal.isActive()){a&&a.preventDefault();var b=getCurrent();return b.close(),b.$elm}},dpQuery.dpModal.isActive=function(){return dpModals.length>0},dpQuery.dpModal.defaults={closeExisting:!0,escapeClose:0,clickClose:0,closeText:"Close",closeClass:"",dpModalClass:"dp-popup-dpModal",spinnerHtml:null,showSpinner:!0,showClose:!0,fadeDuration:null,fadeDelay:1},dpQuery.dpModal.BEFORE_BLOCK="dpModal:before-block",dpQuery.dpModal.BLOCK="dpModal:block",dpQuery.dpModal.BEFORE_OPEN="dpModal:before-open",dpQuery.dpModal.OPEN="dpModal:open",dpQuery.dpModal.BEFORE_CLOSE="dpModal:before-close",dpQuery.dpModal.CLOSE="dpModal:close",dpQuery.dpModal.AFTER_CLOSE="dpModal:after-close",dpQuery.dpModal.AJAX_SEND="dpModal:ajax:send",dpQuery.dpModal.AJAX_SUCCESS="dpModal:ajax:success",dpQuery.dpModal.AJAX_FAIL="dpModal:ajax:fail",dpQuery.dpModal.AJAX_COMPLETE="dpModal:ajax:complete",dpQuery.fn.dpModal=function(a){return 1===this.length&&new dpQuery.dpModal(this,a),this},dpQuery(document).on("click.dpModal",'a[rel="dpModal:close"]',dpQuery.dpModal.close),dpQuery(document).on("click.dpModal",'a[rel="dpModal:open"]',function(a){a.preventDefault(),dpQuery(this).dpModal()});
 
   function reloadCurrency() {
     if (typeof Currency == "object" && typeof Currency.moneyFormats == "object" && typeof mlvedaload == "function") {
       mlvedaload()
     }
   }
+
+  $("span.Bold-theme-hook-DO-NOT-DELETE.bold_cart_total").remove();
 
   var boosterCookieCode = getCookie('booster_discount_' + window.booster.cart.token);
   if(boosterCookieCode){
@@ -1468,44 +1471,64 @@ reqJquery(function($){
       cents = cents.replace(".", "")
     }
 
-	function defOpt(opt,def){return typeof opt == "undefined" ? def : opt}
+    function defOpt(opt,def){return typeof opt == "undefined" ? def : opt}
 
-	function displayDelims(n,p,t,d){
-      p = defOpt(p, 2);
-      t = defOpt(t, ",");
-      d = defOpt(d, ".");
-      if (isNaN(n) || n == null){
-        return 0
+    function displayDelims(n,p,t,d){
+        p = defOpt(p, 2);
+        t = defOpt(t, ",");
+        d = defOpt(d, ".");
+        if (isNaN(n) || n == null){
+          return 0
+        }
+        n = (n / 100).toFixed(p);
+        var parts = n.split("."),dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + t),cents = parts[1] ? d + parts[1] : "";
+        return dollars + cents
+    }
+
+    var val = "";
+    switch (format.match(moneyRegex)[1]) {
+      case "amount":
+        val = displayDelims(cents, 2);
+        break;
+      case "amount_no_decimals":
+        val = displayDelims(cents, 0);
+        break;
+          case "amount_no_decimals_with_comma_separator":
+        val = displayDelims(cents, 0, ".", ",");
+        break
+      case "amount_with_comma_separator":
+        val = displayDelims(cents, 2, ".", ",");
+        break;
+    }
+    return format.replace(moneyRegex, val)
+  }
+
+  function baDiscountedPrice(price, discountApplies, discountMethod, disValue){
+    if (discountApplies){
+      if (discountMethod == 'percent'){
+        var multipler = 1 - (parseFloat(disValue) / 100.00);
+        var baPrice = price * multipler;
       }
-      n = (n / 100).toFixed(p);
-      var parts = n.split("."),dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + t),cents = parts[1] ? d + parts[1] : "";
-      return dollars + cents
-	}
+      else if (discountMethod == 'fixed'){
+        var baPrice = (disValue * 100);
+      }
+      else if (discountMethod == 'off'){
+        var baPrice = price - (disValue * 100);
+      }
 
-	var val = "";
-	switch (format.match(moneyRegex)[1]) {
-		case "amount":
-			val = displayDelims(cents, 2);
-			break;
-		case "amount_no_decimals":
-			val = displayDelims(cents, 0);
-			break;
-        case "amount_no_decimals_with_comma_separator":
-			val = displayDelims(cents, 0, ".", ",");
-			break
-		case "amount_with_comma_separator":
-			val = displayDelims(cents, 2, ".", ",");
-			break;
-	}
-	return format.replace(moneyRegex, val)
-}
+      var disPrice = baDisplayCents(baPrice);
+      var ogPrice  = baDisplayCents(price);
+      var str = disPrice + " <s>" + ogPrice + "</s>";
+    } else {
+      var str = baDisplayCents(price);
+    }
+    return str
+  }
 
-  
-  
  function showBoosterBundle(ba_data){
 	var arr = [];
 	var products = [];
-	ba_data.ba_bundle.items.map(function(p){
+	ba_data.items.map(function(p){
     arr.push($.getJSON("/products/" + p.handle + ".json", function(data) {
       var prod = data.product;
       prod.variantsStyle = "";
@@ -1583,7 +1606,7 @@ reqJquery(function($){
           noVariants = false
         }
         products[i].quantity = 1;
-        var curProd = ba_data.ba_bundle.items.filter(function(p) {
+        var curProd = ba_data.items.filter(function(p) {
           return p.id == products[i].id
         });
         if (curProd.length == 1 && curProd[0].qty > 1) {
@@ -1613,7 +1636,7 @@ reqJquery(function($){
     var context = {
       save_text: ba_data.save_text,
       discount_applies: ba_data.discount_applies,
-      ba_bundle: ba_data.ba_bundle,
+      ba_bundle: ba_data,
       bundle_note: ba_data.bundle_note,
       products: products,
       css_length: cssLength,
@@ -1622,18 +1645,21 @@ reqJquery(function($){
     };
     var template = Handlebars.compile(source);
     var html = template(context);
-    $('div.ba-bundle-wrapper').html(html);
+    $('div.ba-bundle-wrapper').append(html);
   })
 }
 
 
-  
   function showBaUpsell(ba_data){
     var arr = [];
     var products = [];
-    var offerId = ba_data.discounts.upsell_arr[0].offer_id;
-    var upsellNote = ba_data.discounts.upsell_arr[0].upsell_note;
-    var discount_applies = ba_data.discounts.upsell_arr[0].discount_applies;
+    var upsellItem = ba_data.discounts.upsell_arr[0];
+    var offerId = upsellItem.offer_id;
+    var upsellNote = upsellItem.upsell_note;
+    var discount_applies = upsellItem.discount_applies;
+    var discount_method = upsellItem.discount_method;
+    var discount_value = upsellItem.value;
+
     ba_data.discounts.upsell_arr.map(function(p){
     arr.push($.getJSON("/products/" + p.handle + ".json", function(data) {
       var prod = data.product;
@@ -1656,7 +1682,8 @@ reqJquery(function($){
           } else {
             prod.variants[i].compare_at_price = ""
           }
-          prod.variants[i].price = baDisplayCents(prod.variants[i].price);
+          prod.variants[i].price = baDiscountedPrice(prod.variants[i].price, discount_applies, discount_method, discount_value);
+        
         }     
         if (prod.variants.length == 1) {
           prod.variantsStyle = "display: none;";
@@ -1757,18 +1784,21 @@ reqJquery(function($){
       multiple_products: multiple_products,
       discount_applies: discount_applies,
       upsell_note: upsellNote,
-      discount_applies: discount_applies,
       products: products,
       css_length: cssLength,
       ba_plus_url: "{{ 'ba-plus.png' | asset_img_url: '38x' }}",
-      offer_id: offerId
+      offer_id: offerId,
+      discount_method: discount_method,
+      discount_value: discount_value
+      
     };
     var template = Handlebars.compile(source);
     var html = template(context);
     $('body').append(html);
     $('#dpModal-container').dpModal();
     });
-  }
+  }  
+
         
   function showVolDiscounts(data){
     var source = $("#ba-discount-tiers").html();
@@ -1793,12 +1823,15 @@ reqJquery(function($){
       
     }
     
-    if(data.type == 'bundle'){
+    if(data.ba_bundles){
       var cartForm = $("form[action*='/cart/add']").first();   
       if($('.ba-bundle-wrapper').length == 0){
         cartForm.after("<div class='ba-bundle-wrapper'></div>");
       }
-      showBoosterBundle(data)
+
+      $(data.ba_bundles).each(function(i,ba){
+        showBoosterBundle(ba);
+      });
     }
 
     if (typeof data.discounts == "object" && typeof data.discounts.upsell_arr == "object"){
@@ -1894,9 +1927,9 @@ reqJquery(function($){
   function addBoosterBundle(e){
     e.preventDefault();
     var boosterBundleItems = [];
-      
-    $(".ba-product-wrapper").each(function() {
-        var i = {id: $(this).data("variant-id"),quantity: $(this).data("quantity")};	
+
+    $(e.target).parents(".ba-product-bundle").find(".ba-product-wrapper").each(function() {
+      var i = {id: $(this).data("variant-id"),quantity: $(this).data("quantity")};	
       boosterBundleItems.push(i);
     });
     
@@ -2074,6 +2107,40 @@ reqJquery(function($){
 
   }
 
+  function openReplacement(method, url, async, user, password) {
+      return open.apply(this, arguments);
+  }
+
+  function sendReplacement(data) {
+      //console.warn('Sending HTTP request data : ', data);
+      if(this.onreadystatechange) {
+          this._onreadystatechange = this.onreadystatechange;
+      }
+      this.onreadystatechange = onReadyStateChangeReplacement;
+      return send.apply(this, arguments);
+  }
+
+  function onReadyStateChangeReplacement() {
+      //console.warn('HTTP request ready state changed : ' + this.readyState);
+      if(this._onreadystatechange) {
+          return this._onreadystatechange.apply(this, arguments);
+      }
+
+      if(this.readyState===4){
+        //console.log("Success! " + this._url);
+        if (this._url == '/cart/change.js'){
+          window.location.reload();
+        }
+      }
+  }
+
+
+  if(window.booster.ba_page == 'cart'){
+    var skipIds = getCookie('ba-skip-ids');
+    if (skipIds){
+      window.booster.skip_ids = skipIds;
+    }
+  }
 
   if(window.booster.ba_page.length > 0){
     $.ajax({
@@ -2101,11 +2168,21 @@ reqJquery(function($){
   });
 
   if(window.booster.ba_page == 'cart'){
+
     $(document).ajaxSuccess(function(evt,xhr,attrs) {
       if (attrs.url == '/cart/change.js'){
         $("form[action$='cart']").submit();
       }
     });
+
+    //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+    var open = window.XMLHttpRequest.prototype.open,
+      send = window.XMLHttpRequest.prototype.send,
+      onReadyStateChange;
+
+    window.XMLHttpRequest.prototype.open = openReplacement;
+    window.XMLHttpRequest.prototype.send = sendReplacement;
+
   }
 
   $(document).on('change', 'select.ba-variants', function(){
@@ -2123,16 +2200,21 @@ reqJquery(function($){
 
   $(document).on('change', '#dpModal-container select.ba-variants', function(){
       var option = $(this).find(":selected");
-      var price  = baDisplayCents(option.data('price'));
+      var upsellCont = option.parents('.ba-product-bundle');
       var cont = option.parents('.product-container');
-      var img  = option.data('img');
+      var discountMethod = upsellCont.data('discount-method');
+      var discountValue  = upsellCont.data('discount-value');
+      var discountApplies  = upsellCont.data('discount-applies');
 
-      cont.data("variant-id", option.val());    
+      var price  = baDiscountedPrice(option.data('price'), discountApplies, discountMethod, discountValue);
+      var img 	 = option.data('img');
+
+      cont.data("variant-id", option.val());
       cont.find('span.ba-sale').html(price);
       cont.find('img').attr('src', img);
       reloadCurrency();
       return false;
-    });
+  });
 
   
   $(document).on('click', ".add-booster-bundle", function(e) {
@@ -2145,12 +2227,22 @@ reqJquery(function($){
     addBoosterUpsells(e.target);
   });
 
-  $(document).on('click', '.no-thanks a', function(){
-    var link = $(this);
-    var offerId = link.data('offer-id')
+  $(document).on($.dpModal.BEFORE_CLOSE, function(event, modal){
+    var link = $('#dpModal-container').find('.no-thanks a');
+    var offerId = link.data('offer-id');
+    hideUpsell(offerId)
+  });
+
+  function hideUpsell(offerId){
     var currentSkipIds = getCookie('ba-skip-ids');
     var allSkipIds = currentSkipIds + ',' + offerId;
     setCookie('ba-skip-ids', allSkipIds);
+  }
+
+  $(document).on('click', '.no-thanks a', function(){
+    var link = $(this);
+    var offerId = link.data('offer-id')
+    hideUpsell(offerId)
     $.dpModal.close()
     return false;
   });
