@@ -42,7 +42,7 @@
 	color:#282827;
 }
 .home-slider .flex-control-nav .fa:hover {
-	color: #7f9e2a;
+	color: #02a19a;
 }
 .home-slider .flex-control-nav a {
 	background-color: #ffffff;
@@ -199,7 +199,7 @@ html[xmlns] .slides {
 }
 .home-slider:hover .flex-next:hover, .home-slider:hover .flex-prev:hover {
 	opacity: 1;
-  	color:#9ac625;
+  	color:#02c3ba;
 }
 .flex-direction-nav .flex-disabled {
   opacity: 0!important;
@@ -374,10 +374,10 @@ html[xmlns] .slides {
 	box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
 }
 .home-slider .flex-control-paging li a:hover {
-	background: #9ac625;
+	background: #02c3ba;
 }
 .home-slider .flex-control-paging li a.flex-active {
-	background-color: #9ac625 !important;
+	background-color: #02c3ba !important;
 	cursor: default;
 }
 .home-slider .flex-control-thumbs {

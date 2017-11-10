@@ -6,10 +6,22 @@ All notable changes to this project will be documented in this file.
 - Re-order button
 - Discount ribbon for discounted products
 
+## [0.1.2] - 2017-11-10
+### Added
+- New Layout for the Collection Page (Having a header banner that gets its input from text box)
+- **Buy-one-get-one-free** script for product.products_type="bogof"
+### Changed
+- Color of the website #02c3ba
+- Changing the location of the 2/3 banner to Just water and BOGOF
+### Removed
+- Superfood banner
+- Delievery banner
+
 ## [0.1.1] - 2017-11-08
 ### Added
 - collection.w-header.liquid for collection with promotional header
 - BOGO free Ruby script (Refer to other Git Repo)
+
 
 
 
